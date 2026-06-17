@@ -15,6 +15,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { Badge } from "@/components/ui/Badge";
 import { VehicleGallery } from "@/components/vehicle/VehicleGallery";
 import { FavoriteButton } from "@/components/vehicle/FavoriteButton";
+import { CompareButton } from "@/components/compare/CompareButton";
 import { InquiryForm } from "@/components/vehicle/InquiryForm";
 import { RecordView } from "@/components/vehicle/RecordView";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
@@ -188,7 +189,10 @@ export default async function VehicleDetailPage({
             </div>
 
             <div className="flex flex-col gap-3">
-              <FavoriteButton vehicleId={vehicle.id} initial={favorited.has(vehicle.id)} variant="full" />
+              <div className="grid grid-cols-2 gap-3">
+                <FavoriteButton vehicleId={vehicle.id} initial={favorited.has(vehicle.id)} variant="full" />
+                <CompareButton vehicleId={vehicle.id} variant="full" />
+              </div>
               <Link
                 href={`/calculator?price=${vehicle.price}`}
                 className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-steel-2 text-sm font-medium text-silver transition-all hover:border-accent hover:text-chrome"

@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransition } from "@/components/motion/PageTransition";
+import { CompareBar } from "@/components/compare/CompareBar";
 import { getHeaderUser } from "@/lib/auth";
 
 export default async function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -12,6 +13,7 @@ export default async function MarketingLayout({ children }: { children: React.Re
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />
+      <CompareBar />
     </div>
   );
 }

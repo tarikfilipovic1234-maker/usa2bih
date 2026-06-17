@@ -4,17 +4,21 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { ImportStageTracker } from "@/components/dashboard/ImportStageTracker";
+import { VehicleCard } from "@/components/vehicle/VehicleCard";
 import { requireUser } from "@/lib/auth";
-import { getDashboardStats, getUserImports } from "@/lib/dashboard";
+import { getDashboardStats, getRecentlyViewed, getUserImports } from "@/lib/dashboard";
+import { getFavoritedIds } from "@/app/actions/favorites";
 import { humanizeEnum } from "@/lib/utils";
 
 export const metadata = { title: "Dashboard" };
 
 export default async function DashboardPage() {
   const { user, profile } = await requireUser();
-  const [stats, imports] = await Promise.all([
+  const [stats, imports, recentlyViewed, favorited] = await Promise.all([
     getDashboardStats(user.id),
     getUserImports(user.id),
+    getRecentlyViewed(user.id),
+    getFavoritedIds(),
   ]);
   const activeImport = imports.find((i) => i.currentStage !== "COMPLETED");
 
@@ -61,6 +65,22 @@ export default async function DashboardPage() {
           </p>
           <ButtonLink href="/cars">Browse cars</ButtonLink>
         </GlassCard>
+      )}
+
+      {recentlyViewed.length > 0 && (
+        <section>
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="font-display text-xl font-semibold text-chrome">Recently viewed</h2>
+            <Link href="/cars" className="text-sm text-silver-dim transition-colors hover:text-accent">
+              Browse all →
+            </Link>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+            {recentlyViewed.map((v) => (
+              <VehicleCard key={v.id} vehicle={v} favorited={favorited.has(v.id)} />
+            ))}
+          </div>
+        </section>
       )}
 
       <div className="flex flex-wrap gap-3">

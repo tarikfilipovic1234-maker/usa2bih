@@ -4,6 +4,7 @@ import { Fuel, Gauge, Settings2 } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Badge } from "@/components/ui/Badge";
 import { FavoriteButton } from "./FavoriteButton";
+import { CompareButton } from "@/components/compare/CompareButton";
 import { estimateLandedTotal } from "@/lib/calculator";
 import { formatBAM, formatMiles, formatUSD, humanizeEnum } from "@/lib/utils";
 import type { VehicleWithImages } from "@/lib/queries";
@@ -49,7 +50,8 @@ export function VehicleCard({
           {vehicle.featured && <Badge tone="accent">Featured</Badge>}
           <Badge tone={damageTone[vehicle.damageStatus]}>{humanizeEnum(vehicle.damageStatus)}</Badge>
         </div>
-        <div className="absolute right-3 top-3">
+        <div className="absolute right-3 top-3 flex gap-2">
+          <CompareButton vehicleId={vehicle.id} />
           <FavoriteButton vehicleId={vehicle.id} initial={favorited} />
         </div>
       </div>
