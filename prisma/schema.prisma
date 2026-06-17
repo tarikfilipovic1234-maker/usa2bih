@@ -1,0 +1,306 @@
+// USA2BIH — data model
+// Prisma 7 (prisma-client generator + Neon driver adapter).
+// User identity is owned by Neon Auth (Stack Auth) in the `neon_auth.users_sync`
+// table; our tables reference users by their Stack user id (string).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────── Enums ───────────────────────────
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum FuelType {
+  GASOLINE
+  DIESEL
+  HYBRID
+  ELECTRIC
+  FLEX
+  OTHER
+}
+
+enum Transmission {
+  AUTOMATIC
+  MANUAL
+  CVT
+  DUAL_CLUTCH
+}
+
+enum BodyStyle {
+  SEDAN
+  COUPE
+  SUV
+  TRUCK
+  HATCHBACK
+  CONVERTIBLE
+  WAGON
+  VAN
+  MINIVAN
+}
+
+enum DriveType {
+  FWD
+  RWD
+  AWD
+  FOUR_WD
+}
+
+enum DamageStatus {
+  CLEAN
+  MINOR
+  MODERATE
+  SEVERE
+  SALVAGE
+}
+
+enum VehicleStatus {
+  DRAFT
+  ACTIVE
+  SOLD
+  ARCHIVED
+}
+
+enum InquiryStatus {
+  NEW
+  IN_PROGRESS
+  CLOSED
+}
+
+enum ImportStage {
+  VEHICLE_FOUND
+  AUCTION_WON
+  PAYMENT_COMPLETED
+  SHIPPING
+  PORT_ARRIVAL
+  CUSTOMS_CLEARANCE
+  DELIVERY
+  COMPLETED
+}
+
+// ─────────────────────────── Models ───────────────────────────
+
+/// App-specific profile keyed to a Neon Auth (Stack) user id.
+model UserProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique // Stack Auth user id
+  email     String?
+  name      String?
+  phone     String?
+  locale    String   @default("bs")
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([role])
+}
+
+model Vehicle {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  make        String
+  model       String
+  year        Int
+  trim        String?
+
+  mileage      Int
+  fuelType     FuelType
+  transmission Transmission
+  bodyStyle    BodyStyle
+  driveType    DriveType
+  exteriorColor String?
+  interiorColor String?
+
+  // Pricing (purchase price at auction, in USD whole dollars)
+  price    Int
+  currency String @default("USD")
+
+  // Identity & mechanicals
+  vin          String? @unique
+  engine       String?
+  cylinders    Int?
+  condition    String?
+
+  // Auction / damage info
+  damageStatus DamageStatus @default(CLEAN)
+  damageNotes  String?
+  auctionName  String?
+  auctionDate  DateTime?
+  lotNumber    String?
+  location     String? // US auction location
+
+  estimatedArrivalDays Int? // logistics ETA estimate
+
+  description String?
+  featured    Boolean       @default(false)
+  status      VehicleStatus @default(DRAFT)
+  views       Int           @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  images          VehicleImage[]
+  favorites       Favorite[]
+  inquiries       Inquiry[]
+  calculations    CalculationHistory[]
+  importOrders    ImportOrder[]
+  recentlyViewed  RecentlyViewed[]
+
+  @@index([make, model])
+  @@index([status])
+  @@index([featured])
+  @@index([year])
+  @@index([price])
+  @@index([fuelType])
+  @@index([bodyStyle])
+}
+
+model VehicleImage {
+  id        String  @id @default(cuid())
+  vehicleId String
+  url       String
+  alt       String?
+  sortOrder Int     @default(0)
+  isPrimary Boolean @default(false)
+
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@index([vehicleId])
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  vehicleId String
+  createdAt DateTime @default(now())
+
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, vehicleId])
+  @@index([userId])
+}
+
+model Inquiry {
+  id        String        @id @default(cuid())
+  userId    String?
+  vehicleId String?
+  name      String
+  email     String
+  phone     String?
+  message   String
+  status    InquiryStatus @default(NEW)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  vehicle Vehicle? @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([status])
+  @@index([vehicleId])
+}
+
+model CalculationHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  vehicleId String?
+  // Raw inputs + computed line items (purchase, shipping, customs, vat, registration, fees…)
+  input     Json
+  totalUSD  Int
+  totalEUR  Int
+  totalBAM  Int
+  createdAt DateTime @default(now())
+
+  vehicle Vehicle? @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+}
+
+model ImportOrder {
+  id           String      @id @default(cuid())
+  userId       String
+  vehicleId    String?
+  reference    String      @unique // human-friendly tracking code
+  currentStage ImportStage @default(VEHICLE_FOUND)
+  notes        String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  vehicle   Vehicle?           @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
+  events    ImportStageEvent[]
+  documents ImportDocument[]
+
+  @@index([userId])
+  @@index([currentStage])
+}
+
+model ImportStageEvent {
+  id            String      @id @default(cuid())
+  importOrderId String
+  stage         ImportStage
+  note          String?
+  occurredAt    DateTime    @default(now())
+
+  importOrder ImportOrder @relation(fields: [importOrderId], references: [id], onDelete: Cascade)
+
+  @@index([importOrderId])
+}
+
+model ImportDocument {
+  id            String   @id @default(cuid())
+  importOrderId String?
+  userId        String
+  name          String
+  url           String
+  type          String? // e.g. "invoice", "title", "bill_of_lading"
+  createdAt     DateTime @default(now())
+
+  importOrder ImportOrder? @relation(fields: [importOrderId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([importOrderId])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  handled   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([handled])
+}
+
+model GuideContent {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  body      String
+  icon      String?
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
+
+model RecentlyViewed {
+  id        String   @id @default(cuid())
+  userId    String
+  vehicleId String
+  viewedAt  DateTime @default(now())
+
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, vehicleId])
+  @@index([userId])
+}
