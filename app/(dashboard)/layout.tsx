@@ -12,7 +12,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
         title="My Account"
         displayName={user.displayName ?? null}
       />
-      <main className="min-w-0 flex-1 px-5 py-8 sm:px-8">{children}</main>
+      <main id="main-content" className="min-w-0 flex-1 px-5 py-8 sm:px-8">
+        {children}
+      </main>
     </div>
   );
 }
