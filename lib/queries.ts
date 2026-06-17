@@ -111,6 +111,17 @@ export async function getFeaturedVehicles(limit = 4): Promise<VehicleWithImages[
   });
 }
 
+/** Fetch a set of vehicles by id (for the comparison tool), preserving input order. */
+export async function getVehiclesByIds(idList: string[]): Promise<VehicleWithImages[]> {
+  if (idList.length === 0) return [];
+  const rows = await prisma.vehicle.findMany({
+    where: { id: { in: idList } },
+    include: vehicleListInclude,
+  });
+  const byId = new Map(rows.map((r) => [r.id, r]));
+  return idList.map((id) => byId.get(id)).filter((v): v is VehicleWithImages => Boolean(v));
+}
+
 export async function getVehicleBySlug(slug: string) {
   return prisma.vehicle.findUnique({
     where: { slug },

@@ -57,6 +57,16 @@ export async function getImportOrder(userId: string, id: string): Promise<Import
   return prisma.importOrder.findFirst({ where: { id, userId }, include: importInclude });
 }
 
+export async function getRecentlyViewed(userId: string, limit = 4) {
+  const rows = await prisma.recentlyViewed.findMany({
+    where: { userId, vehicle: { status: "ACTIVE" } },
+    orderBy: { viewedAt: "desc" },
+    take: limit,
+    include: { vehicle: { include: { images: { orderBy: { sortOrder: "asc" } } } } },
+  });
+  return rows.map((r) => r.vehicle);
+}
+
 export async function getUserDocuments(userId: string) {
   return prisma.importDocument.findMany({
     where: { userId },
