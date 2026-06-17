@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { prisma } from "@/lib/db";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { PAGE_SIZE } from "@/lib/constants";
@@ -122,12 +123,13 @@ export async function getVehiclesByIds(idList: string[]): Promise<VehicleWithIma
   return idList.map((id) => byId.get(id)).filter((v): v is VehicleWithImages => Boolean(v));
 }
 
-export async function getVehicleBySlug(slug: string) {
+/** Cached per request so the page, generateMetadata and OG image share one query. */
+export const getVehicleBySlug = cache(async (slug: string) => {
   return prisma.vehicle.findUnique({
     where: { slug },
     include: { images: { orderBy: { sortOrder: "asc" } } },
   });
-}
+});
 
 /** Similar vehicles (same body style or make), excluding the current one. */
 export async function getRelatedVehicles(
