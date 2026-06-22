@@ -16,9 +16,9 @@ export default async function ProfilePage() {
 
       <GlassCard chrome className="p-6 sm:p-8">
         <ProfileForm
-          email={user.primaryEmail ?? profile.email ?? "—"}
+          email={user.email ?? profile.email ?? "—"}
           defaults={{
-            name: profile.name ?? user.displayName ?? "",
+            name: profile.name ?? user.name ?? "",
             phone: profile.phone ?? "",
             locale: profile.locale ?? "bs",
           }}

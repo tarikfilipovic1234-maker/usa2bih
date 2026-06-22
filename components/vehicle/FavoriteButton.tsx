@@ -26,7 +26,7 @@ export function FavoriteButton({
       const res = await toggleFavorite(vehicleId);
       if (!res.ok) {
         setFavorited(initial);
-        router.push("/handler/sign-in");
+        router.push("/auth/sign-in");
         return;
       }
       setFavorited(res.favorited);

@@ -56,16 +56,16 @@ export default async function VehicleOg({ params }: { params: Promise<{ slug: st
             background: "linear-gradient(135deg, #0a0e15, #11151f)",
           }}
         >
-          <div style={{ fontSize: 28, fontWeight: 700 }}>
+          <div style={{ display: "flex", fontSize: 28, fontWeight: 700 }}>
             USA<span style={{ color: "#2e9bff" }}>2</span>BIH
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <div style={{ fontSize: 26, color: "#2e9bff", fontWeight: 600 }}>{vehicle.year}</div>
+            <div style={{ fontSize: 26, color: "#2e9bff", fontWeight: 600 }}>{String(vehicle.year)}</div>
             <div style={{ fontSize: 60, fontWeight: 800, lineHeight: 1.05, letterSpacing: -1 }}>
-              {vehicle.make} {vehicle.model}
+              {`${vehicle.make} ${vehicle.model}`}
             </div>
             <div style={{ fontSize: 28, color: "#8a94a6" }}>
-              {vehicle.mileage.toLocaleString()} mi · {humanizeEnum(vehicle.fuelType)} · {humanizeEnum(vehicle.driveType)}
+              {`${vehicle.mileage.toLocaleString()} mi · ${humanizeEnum(vehicle.fuelType)} · ${humanizeEnum(vehicle.driveType)}`}
             </div>
           </div>
           <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>

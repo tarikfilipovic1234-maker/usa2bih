@@ -10,7 +10,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <DashboardSidebar
         items={DASHBOARD_NAV}
         title="My Account"
-        displayName={user.displayName ?? null}
+        displayName={user.name ?? null}
       />
       <main id="main-content" className="min-w-0 flex-1 px-5 py-8 sm:px-8">
         {children}

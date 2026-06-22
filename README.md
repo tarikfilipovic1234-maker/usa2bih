@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# USA2BIH — US → Bosnia Vehicle Import Platform
 
-## Getting Started
+A premium full-stack platform for browsing US auction vehicles, estimating the full landed cost
+in **BAM & EUR**, and managing every step of importing a car to Bosnia & Herzegovina.
 
-First, run the development server:
+Built with **Next.js 16 (App Router) · React 19 · TypeScript · Tailwind v4 · Framer Motion ·
+Prisma 7 · Neon PostgreSQL · Neon Auth (Better Auth) · Vercel Blob · Resend**.
+
+## Features
+
+- **Public** — animated home, advanced vehicle browse with URL-driven filters, rich vehicle detail
+  (gallery, specs, landed-cost breakdown, inquiry), transparent import cost calculator, import
+  guide, about/FAQ/contact, and a side-by-side comparison tool.
+- **User dashboard** — saved vehicles, inquiries, calculation history, import tracking with a
+  visual stage tracker + timeline, document upload, recently-viewed, and profile management.
+- **Admin** — vehicle CRUD with multi-image uploads, featured/status controls, inquiry workflow,
+  user role management, editable guide content, and an analytics overview.
+- **Platform** — SEO (sitemap, robots, manifest, dynamic OG images), accessibility, error/404
+  handling, and a transparent BiH duty + VAT cost model.
+
+## Prerequisites
+
+- **Node.js 20+**
+- A **Neon** PostgreSQL project with **Neon Auth** enabled
+- (Optional) **Vercel Blob** token — required for image/document uploads
+- (Optional) **Resend** API key — required for inquiry/contact emails
+
+## Environment setup
+
+Copy `.env.example` to `.env.local` and fill in the values:
+
+| Variable | Where to find it |
+| --- | --- |
+| `DATABASE_URL` | Neon → Connect → **pooled** connection string (host has `-pooler`) |
+| `DIRECT_URL` | Neon → Connect → **direct** string (no `-pooler`); used for migrations |
+| `NEON_AUTH_BASE_URL` | Neon → **Auth** tab → Configuration → "Auth URL" |
+| `NEON_AUTH_COOKIE_SECRET` | Generate with `openssl rand -base64 32` (≥32 chars) |
+| `BLOB_READ_WRITE_TOKEN` | Vercel → Storage → Blob (optional) |
+| `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_TO` | Resend (optional) |
+| `ADMIN_EMAILS` | Comma-separated emails auto-promoted to ADMIN on first sign-in |
+| `NEXT_PUBLIC_SITE_URL` | Public site URL (used for SEO/OG) |
+
+> Both Next.js and the Prisma CLI read `.env.local` (the Prisma CLI is configured to do so in
+> `prisma.config.ts`).
+
+## Local development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install              # also runs `prisma generate` via postinstall
+npm run db:migrate       # apply migrations to your Neon database
+npm run db:seed          # load demo vehicles + guide content
+npm run dev              # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sign in once with an email listed in `ADMIN_EMAILS`, then visit **/admin**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Useful scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script | Description |
+| --- | --- |
+| `npm run dev` / `build` / `start` | Next.js dev / production build / serve |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm run db:migrate` | `prisma migrate dev` |
+| `npm run db:deploy` | `prisma migrate deploy` (production) |
+| `npm run db:seed` | seed demo data |
+| `npm run db:studio` | open Prisma Studio |
 
-## Learn More
+## Deployment (Vercel)
 
-To learn more about Next.js, take a look at the following resources:
+1. Import the repo into Vercel.
+2. Add every variable from `.env.local` to the Vercel project (Production + Preview).
+3. Build command: `prisma migrate deploy && next build` (apply migrations during build), or run
+   `npm run db:deploy` as a release step.
+4. Deploy. Neon Auth, Blob, and Resend work natively on Vercel.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+  (marketing)/   public site (home, cars, calculator, guide, about, faq, contact, compare)
+  (dashboard)/   authenticated user dashboard
+  admin/         role-gated admin panel
+  auth/          sign-in / sign-up pages
+  actions/       server actions (favorites, inquiries, calculations, documents, admin…)
+  api/auth/      Neon Auth (Better Auth) route handler
+  sitemap.ts robots.ts manifest.ts opengraph-image.tsx
+components/      ui/ motion/ layout/ vehicle/ dashboard/ admin/ compare/ sections/
+lib/             db, auth, queries, dashboard, admin, calculator, validation, email, utils
+prisma/          schema.prisma, migrations, seed.ts
+```
 
-## Deploy on Vercel
+## Cost model
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`lib/calculator.ts` computes the landed cost from purchase + auction fees + shipping, applying BiH
+customs duty (5%) and VAT/PDV (17%), then converts to EUR and BAM (EUR pegged at 1.95583). Rates
+are configurable constants, upgradeable to a live FX source.
