@@ -4,6 +4,9 @@ import { PageTransition } from "@/components/motion/PageTransition";
 import { CompareBar } from "@/components/compare/CompareBar";
 import { getHeaderUser } from "@/lib/auth";
 
+// The header reads the auth session cookie, so these routes render dynamically.
+export const dynamic = "force-dynamic";
+
 export default async function MarketingLayout({ children }: { children: React.ReactNode }) {
   const user = await getHeaderUser();
   return (

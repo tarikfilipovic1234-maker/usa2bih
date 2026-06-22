@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Geist, Geist_Mono } from "next/font/google";
-import { StackProvider, StackTheme } from "@stackframe/stack";
-import { stackServerApp } from "@/stack";
 import "./globals.css";
 import { SITE } from "@/lib/constants";
 
@@ -52,11 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${archivo.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full bg-midnight text-chrome">
-        <StackProvider app={stackServerApp}>
-          <StackTheme>{children}</StackTheme>
-        </StackProvider>
-      </body>
+      <body className="min-h-full bg-midnight text-chrome">{children}</body>
     </html>
   );
 }

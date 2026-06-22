@@ -39,7 +39,7 @@ export default function OgImage() {
           >
             U2
           </div>
-          <div style={{ fontSize: 34, fontWeight: 700, letterSpacing: -1 }}>
+          <div style={{ display: "flex", fontSize: 34, fontWeight: 700, letterSpacing: -1 }}>
             USA<span style={{ color: "#2e9bff" }}>2</span>BIH
           </div>
         </div>

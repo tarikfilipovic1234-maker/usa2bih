@@ -1,5 +1,10 @@
-import "dotenv/config";
+import { config as loadEnv } from "dotenv";
 import { defineConfig } from "prisma/config";
+
+// Prisma CLI loads .env by default; load .env.local first (Next.js convention)
+// so migrations use the real credentials rather than placeholder values.
+loadEnv({ path: ".env.local" });
+loadEnv({ path: ".env" });
 
 export default defineConfig({
   schema: "prisma/schema.prisma",

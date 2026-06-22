@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { LogOut, Menu, Settings, X } from "lucide-react";
+import { Menu, Settings, X } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 import { resolveIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
@@ -52,17 +53,12 @@ export function DashboardSidebar({
   const footer = (
     <div className="mt-auto flex flex-col gap-1 border-t border-white/5 pt-4">
       <Link
-        href="/handler/account-settings"
+        href="/dashboard/profile"
         className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-silver-dim transition-colors hover:bg-white/5 hover:text-chrome"
       >
         <Settings className="h-4 w-4" /> Account settings
       </Link>
-      <Link
-        href="/handler/sign-out"
-        className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-silver-dim transition-colors hover:bg-danger/10 hover:text-danger"
-      >
-        <LogOut className="h-4 w-4" /> Sign out
-      </Link>
+      <SignOutButton className="w-full" />
     </div>
   );
 

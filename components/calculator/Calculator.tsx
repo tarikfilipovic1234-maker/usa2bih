@@ -55,7 +55,7 @@ export function Calculator({
     startTransition(async () => {
       const res = await saveCalculation(values, vehicleId);
       if (!res.ok) {
-        if (res.requiresAuth) router.push("/handler/sign-in");
+        if (res.requiresAuth) router.push("/auth/sign-in");
         return;
       }
       setSaved(true);

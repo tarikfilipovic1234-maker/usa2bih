@@ -75,10 +75,10 @@ export function Header({ user }: { user: HeaderUser }) {
             </>
           ) : (
             <>
-              <ButtonLink href="/handler/sign-in" variant="ghost" size="sm">
+              <ButtonLink href="/auth/sign-in" variant="ghost" size="sm">
                 Sign in
               </ButtonLink>
-              <ButtonLink href="/handler/sign-up" variant="primary" size="sm">
+              <ButtonLink href="/auth/sign-up" variant="primary" size="sm">
                 Get started
               </ButtonLink>
             </>
@@ -129,10 +129,10 @@ export function Header({ user }: { user: HeaderUser }) {
                   </>
                 ) : (
                   <>
-                    <ButtonLink href="/handler/sign-in" variant="outline" size="sm">
+                    <ButtonLink href="/auth/sign-in" variant="outline" size="sm">
                       Sign in
                     </ButtonLink>
-                    <ButtonLink href="/handler/sign-up" variant="primary" size="sm">
+                    <ButtonLink href="/auth/sign-up" variant="primary" size="sm">
                       Get started
                     </ButtonLink>
                   </>
