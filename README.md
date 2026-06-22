@@ -3,29 +3,41 @@
 A premium full-stack platform for browsing US auction vehicles, estimating the full landed cost
 in **BAM & EUR**, and managing every step of importing a car to Bosnia & Herzegovina.
 
+**🔗 Live:** https://usa2bih.vercel.app
+
 Built with **Next.js 16 (App Router) · React 19 · TypeScript · Tailwind v4 · Framer Motion ·
-Prisma 7 · Neon PostgreSQL · Neon Auth (Better Auth) · Vercel Blob · Resend**.
+Prisma 7 · Neon PostgreSQL · Neon Auth (Better Auth) · Vercel Blob · Resend**, deployed on **Vercel**.
+
+---
 
 ## Features
 
 - **Public** — animated home, advanced vehicle browse with URL-driven filters, rich vehicle detail
-  (gallery, specs, landed-cost breakdown, inquiry), transparent import cost calculator, import
-  guide, about/FAQ/contact, and a side-by-side comparison tool.
-- **User dashboard** — saved vehicles, inquiries, calculation history, import tracking with a
-  visual stage tracker + timeline, document upload, recently-viewed, and profile management.
+  (gallery, full specs, landed-cost breakdown, inquiry), a live import cost calculator, the import
+  guide, about / FAQ / contact, and a side-by-side comparison tool.
+- **Accounts** — email/password auth via Neon Auth, a user dashboard with saved vehicles,
+  inquiries, calculation history, import tracking (visual stage tracker + timeline), document
+  uploads, recently-viewed, and profile management.
 - **Admin** — vehicle CRUD with multi-image uploads, featured/status controls, inquiry workflow,
   user role management, editable guide content, and an analytics overview.
 - **Platform** — SEO (sitemap, robots, manifest, dynamic OG images), accessibility, error/404
-  handling, and a transparent BiH duty + VAT cost model.
+  handling, and a transparent BiH customs-duty + VAT cost model.
 
-## Prerequisites
+## Tech stack
 
-- **Node.js 20+**
-- A **Neon** PostgreSQL project with **Neon Auth** enabled
-- (Optional) **Vercel Blob** token — required for image/document uploads
-- (Optional) **Resend** API key — required for inquiry/contact emails
+| Layer | Choice |
+| --- | --- |
+| Framework | Next.js 16 (App Router), React 19, TypeScript |
+| Styling | Tailwind CSS v4, Framer Motion |
+| Database | Neon PostgreSQL via Prisma 7 (Neon serverless driver adapter) |
+| Auth | Neon Auth (Better Auth) — `@neondatabase/auth` |
+| File storage | Vercel Blob |
+| Email | Resend |
+| Hosting | Vercel |
 
-## Environment setup
+## Local development
+
+### 1. Environment
 
 Copy `.env.example` to `.env.local` and fill in the values:
 
@@ -35,15 +47,15 @@ Copy `.env.example` to `.env.local` and fill in the values:
 | `DIRECT_URL` | Neon → Connect → **direct** string (no `-pooler`); used for migrations |
 | `NEON_AUTH_BASE_URL` | Neon → **Auth** tab → Configuration → "Auth URL" |
 | `NEON_AUTH_COOKIE_SECRET` | Generate with `openssl rand -base64 32` (≥32 chars) |
-| `BLOB_READ_WRITE_TOKEN` | Vercel → Storage → Blob (optional) |
-| `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_TO` | Resend (optional) |
 | `ADMIN_EMAILS` | Comma-separated emails auto-promoted to ADMIN on first sign-in |
 | `NEXT_PUBLIC_SITE_URL` | Public site URL (used for SEO/OG) |
+| `BLOB_READ_WRITE_TOKEN` | Vercel → Storage → Blob (optional) |
+| `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_TO` | Resend (optional) |
 
-> Both Next.js and the Prisma CLI read `.env.local` (the Prisma CLI is configured to do so in
+> Both Next.js and the Prisma CLI read `.env.local` (the Prisma CLI is configured to in
 > `prisma.config.ts`).
 
-## Local development
+### 2. Run
 
 ```bash
 npm install              # also runs `prisma generate` via postinstall
@@ -52,9 +64,9 @@ npm run db:seed          # load demo vehicles + guide content
 npm run dev              # http://localhost:3000
 ```
 
-Sign in once with an email listed in `ADMIN_EMAILS`, then visit **/admin**.
+Sign up, then sign in with an email listed in `ADMIN_EMAILS` to access **/admin**.
 
-### Useful scripts
+### Scripts
 
 | Script | Description |
 | --- | --- |
@@ -67,11 +79,16 @@ Sign in once with an email listed in `ADMIN_EMAILS`, then visit **/admin**.
 
 ## Deployment (Vercel)
 
-1. Import the repo into Vercel.
-2. Add every variable from `.env.local` to the Vercel project (Production + Preview).
-3. Build command: `prisma migrate deploy && next build` (apply migrations during build), or run
-   `npm run db:deploy` as a release step.
-4. Deploy. Neon Auth, Blob, and Resend work natively on Vercel.
+The app is deployed on Vercel from the `main` branch. To reproduce:
+
+1. Import the repo at **vercel.com/new** (Next.js is auto-detected).
+2. **Build Command:** `prisma migrate deploy && next build` (runs pending migrations on deploy).
+3. Add the environment variables above to the Vercel project (Production + Preview). The easiest
+   way is to paste the contents of `.env.local` into Vercel's env import, then set
+   `NEXT_PUBLIC_SITE_URL` to the production URL.
+4. **Neon Auth → Domains:** add the production URL (e.g. `https://usa2bih.vercel.app`) to the
+   trusted-domains list, or auth redirects are blocked.
+5. Deploy. Blob and Resend work natively on Vercel.
 
 ## Project structure
 
@@ -81,12 +98,13 @@ app/
   (dashboard)/   authenticated user dashboard
   admin/         role-gated admin panel
   auth/          sign-in / sign-up pages
-  actions/       server actions (favorites, inquiries, calculations, documents, admin…)
   api/auth/      Neon Auth (Better Auth) route handler
+  actions/       server actions (favorites, inquiries, calculations, documents, admin…)
   sitemap.ts robots.ts manifest.ts opengraph-image.tsx
-components/      ui/ motion/ layout/ vehicle/ dashboard/ admin/ compare/ sections/
-lib/             db, auth, queries, dashboard, admin, calculator, validation, email, utils
-prisma/          schema.prisma, migrations, seed.ts
+components/      ui/ motion/ layout/ vehicle/ dashboard/ admin/ compare/ auth/ sections/
+lib/             db, neon-auth, auth, auth-client, queries, dashboard, admin, calculator,
+                 validation, email, icons, utils
+prisma/          schema.prisma, migrations/, seed.ts
 ```
 
 ## Cost model
