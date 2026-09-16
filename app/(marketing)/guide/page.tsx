@@ -18,6 +18,7 @@ export default async function GuidePage() {
     <>
       <Container className="py-12">
         <SectionHeading
+          as="h1"
           eyebrow="Import guide"
           title="How importing works, step by step"
           description="A transparent, fully managed process. Here's exactly what happens from start to finish."

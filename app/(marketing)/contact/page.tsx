@@ -22,6 +22,7 @@ export default function ContactPage() {
   return (
     <Container className="py-12">
       <SectionHeading
+        as="h1"
         eyebrow="Contact"
         title="Let's get your import started"
         description="Questions about a specific vehicle or the process? Send us a message and our team will get back to you."

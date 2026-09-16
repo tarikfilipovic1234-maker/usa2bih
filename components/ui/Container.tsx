@@ -10,12 +10,15 @@ export function SectionHeading({
   title,
   description,
   align = "center",
+  as: Tag = "h2",
   className,
 }: {
   eyebrow?: string;
   title: React.ReactNode;
   description?: React.ReactNode;
   align?: "left" | "center";
+  /** Use "h1" when this heading is the page's main title. */
+  as?: "h1" | "h2";
   className?: string;
 }) {
   return (
@@ -27,16 +30,20 @@ export function SectionHeading({
       )}
     >
       {eyebrow && (
-        <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-          <span className="h-px w-6 bg-accent/60" />
+        <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           {eyebrow}
         </span>
       )}
-      <h2 className="font-display text-3xl font-bold tracking-tight text-chrome-gradient sm:text-4xl md:text-5xl">
+      <Tag className="font-display text-3xl font-semibold tracking-tight text-chrome sm:text-4xl">
         {title}
-      </h2>
+      </Tag>
       {description && (
-        <p className={cn("max-w-2xl text-balance text-silver-dim", align === "center" && "mx-auto")}>
+        <p
+          className={cn(
+            "max-w-2xl text-balance leading-relaxed text-silver-dim",
+            align === "center" && "mx-auto",
+          )}
+        >
           {description}
         </p>
       )}

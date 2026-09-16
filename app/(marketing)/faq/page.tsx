@@ -45,6 +45,7 @@ export default function FaqPage() {
     <>
       <Container className="py-12">
         <SectionHeading
+          as="h1"
           eyebrow="FAQ"
           title="Frequently asked questions"
           description="Everything you need to know about importing your next car. Can't find an answer? Get in touch."

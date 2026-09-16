@@ -1,36 +1,35 @@
 import type { Metadata } from "next";
-import { Eye, Gauge, HandshakeIcon, ShieldCheck } from "lucide-react";
+import { Calculator, FileText, Gavel, Ship } from "lucide-react";
 import { Container, SectionHeading } from "@/components/ui/Container";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { StatsStrip } from "@/components/sections/StatsStrip";
 import { CTA } from "@/components/sections/CTA";
 
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "USA2BIH makes importing American cars to Bosnia & Herzegovina transparent, simple, and fully managed — from US auctions to your driveway.",
+    "USA2BIH handles the full import of American cars into Bosnia and Herzegovina: auction bidding, ocean freight, customs clearance and registration.",
 };
 
-const VALUES = [
+const WHAT_WE_DO = [
   {
-    icon: Eye,
-    title: "Radical transparency",
-    body: "Every fee, upfront. Our calculator shows the full landed cost before you commit — no surprises at the port.",
+    icon: Calculator,
+    title: "Costing before you bid",
+    body: "The calculator applies the same duty, VAT and conversion rates we use internally, so the figure you see before bidding is the figure we work to.",
   },
   {
-    icon: ShieldCheck,
-    title: "End-to-end trust",
-    body: "We handle bidding, payment, shipping, customs and registration, keeping you informed at every stage.",
+    icon: Gavel,
+    title: "Bidding at US auctions",
+    body: "We hold the broker access needed to bid at Copart and IAAI on your behalf, and we bid only up to the ceiling you set.",
   },
   {
-    icon: Gauge,
-    title: "Speed & efficiency",
-    body: "Optimised logistics and auction partnerships mean faster delivery and better prices for you.",
+    icon: Ship,
+    title: "Freight and clearance",
+    body: "Inland transport to the export port, ocean freight to Europe, and customs clearance into Bosnia and Herzegovina are handled as one job.",
   },
   {
-    icon: HandshakeIcon,
-    title: "People first",
-    body: "Real support from a team that knows both the US auction world and the Bosnian import process.",
+    icon: FileText,
+    title: "Paperwork in one place",
+    body: "The US title, bill of lading, customs declaration and registration documents are uploaded to your dashboard as each one is issued.",
   },
 ];
 
@@ -39,25 +38,39 @@ export default function AboutPage() {
     <>
       <Container className="py-12">
         <SectionHeading
+          as="h1"
+          align="left"
           eyebrow="About us"
-          title="Importing American cars, the honest way"
-          description="We started USA2BIH because importing a car shouldn't feel like a gamble. Our mission is to bring American vehicles to Bosnia & Herzegovina with complete transparency and zero stress."
+          title="Importing American cars into Bosnia"
+          description="Buying a car at a US auction is the easy part. The cost of getting it onto Bosnian plates is where most imports go wrong, so we quote that cost first and handle every step that follows."
         />
       </Container>
 
-      <StatsStrip />
-
-      <Container className="py-16">
+      <Container className="pb-16">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {VALUES.map((v) => (
+          {WHAT_WE_DO.map((v) => (
             <GlassCard key={v.title} interactive className="p-6">
-              <span className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-accent/15 text-accent-bright">
-                <v.icon className="h-6 w-6" />
+              <span className="mb-4 grid h-10 w-10 place-items-center rounded-md bg-accent/10 text-accent-bright">
+                <v.icon className="h-5 w-5" />
               </span>
-              <h3 className="font-display text-lg font-semibold text-chrome">{v.title}</h3>
+              <h2 className="font-display text-base font-semibold text-chrome">{v.title}</h2>
               <p className="mt-2 text-sm leading-relaxed text-silver-dim">{v.body}</p>
             </GlassCard>
           ))}
+        </div>
+      </Container>
+
+      <Container className="pb-16">
+        <div className="max-w-2xl border-l-2 border-accent/40 pl-6">
+          <h2 className="font-display text-xl font-semibold text-chrome">
+            Where the estimate can move
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-silver-dim">
+            An estimate is not a binding quote. Auction fees vary with the final hammer price,
+            ocean freight rates change with the shipping season, and the customs value is set by
+            the authority at clearance, not by us. Send an inquiry on a specific vehicle and we
+            will put an itemised quote in writing before any money moves.
+          </p>
         </div>
       </Container>
 

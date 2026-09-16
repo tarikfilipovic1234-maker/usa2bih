@@ -24,6 +24,7 @@ export default async function CalculatorPage({
   return (
     <Container className="py-12">
       <SectionHeading
+        as="h1"
         align="left"
         eyebrow="Cost calculator"
         title="Estimate your landed cost"
