@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { GitCompareArrows } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
 import { CompareButton } from "@/components/compare/CompareButton";
 import { getVehiclesByIds, type VehicleWithImages } from "@/lib/queries";
@@ -12,7 +12,8 @@ import { formatBAM, formatMiles, formatUSD, humanizeEnum } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Compare Vehicles",
-  description: "Compare US auction vehicles side by side — specs, condition and estimated landed cost.",
+  description:
+    "Compare US auction vehicles side by side on specification, condition and estimated landed cost.",
 };
 
 type Row = { label: string; render: (v: VehicleWithImages) => string };
@@ -26,12 +27,12 @@ const ROWS: Row[] = [
   { label: "Transmission", render: (v) => humanizeEnum(v.transmission) },
   { label: "Body style", render: (v) => humanizeEnum(v.bodyStyle) },
   { label: "Drivetrain", render: (v) => humanizeEnum(v.driveType) },
-  { label: "Engine", render: (v) => v.engine ?? "—" },
-  { label: "Cylinders", render: (v) => (v.cylinders ? String(v.cylinders) : "—") },
+  { label: "Engine", render: (v) => v.engine ?? "Not listed" },
+  { label: "Cylinders", render: (v) => (v.cylinders ? String(v.cylinders) : "Not listed") },
   { label: "Damage", render: (v) => humanizeEnum(v.damageStatus) },
-  { label: "Auction", render: (v) => v.auctionName ?? "—" },
-  { label: "Location", render: (v) => v.location ?? "—" },
-  { label: "Est. arrival", render: (v) => (v.estimatedArrivalDays ? `~${v.estimatedArrivalDays} days` : "—") },
+  { label: "Auction", render: (v) => v.auctionName ?? "Not listed" },
+  { label: "Location", render: (v) => v.location ?? "Not listed" },
+  { label: "Est. arrival", render: (v) => (v.estimatedArrivalDays ? `~${v.estimatedArrivalDays} days` : "Not listed") },
 ];
 
 export default async function ComparePage({
@@ -46,14 +47,14 @@ export default async function ComparePage({
   return (
     <Container className="py-12">
       <header className="mb-8">
-        <h1 className="font-display text-4xl font-bold tracking-tight text-chrome-gradient">
+        <h1 className="font-display text-4xl font-bold tracking-tight text-chrome">
           Compare Vehicles
         </h1>
         <p className="mt-2 text-silver-dim">Side-by-side specs and estimated landed cost.</p>
       </header>
 
       {vehicles.length === 0 ? (
-        <GlassCard className="flex flex-col items-center gap-4 px-6 py-20 text-center">
+        <Card className="flex flex-col items-center gap-4 px-6 py-20 text-center">
           <span className="grid h-16 w-16 place-items-center rounded-2xl bg-white/5 text-silver-dim">
             <GitCompareArrows className="h-8 w-8" />
           </span>
@@ -64,9 +65,9 @@ export default async function ComparePage({
             </p>
           </div>
           <ButtonLink href="/cars">Browse cars</ButtonLink>
-        </GlassCard>
+        </Card>
       ) : (
-        <GlassCard className="overflow-x-auto p-0">
+        <Card className="overflow-x-auto p-0">
           <table className="w-full min-w-[640px] border-collapse">
             <thead>
               <tr>
@@ -118,7 +119,7 @@ export default async function ComparePage({
               </tr>
             </tbody>
           </table>
-        </GlassCard>
+        </Card>
       )}
     </Container>
   );

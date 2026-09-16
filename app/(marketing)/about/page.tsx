@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Calculator, FileText, Gavel, Ship } from "lucide-react";
 import { Container, SectionHeading } from "@/components/ui/Container";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { CTA } from "@/components/sections/CTA";
 
 export const metadata: Metadata = {
@@ -46,21 +46,21 @@ export default function AboutPage() {
         />
       </Container>
 
-      <Container className="pb-16">
+      <Container className="pb-14">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {WHAT_WE_DO.map((v) => (
-            <GlassCard key={v.title} interactive className="p-6">
+            <Card key={v.title} interactive className="p-6">
               <span className="mb-4 grid h-10 w-10 place-items-center rounded-md bg-accent/10 text-accent-bright">
                 <v.icon className="h-5 w-5" />
               </span>
               <h2 className="font-display text-base font-semibold text-chrome">{v.title}</h2>
               <p className="mt-2 text-sm leading-relaxed text-silver-dim">{v.body}</p>
-            </GlassCard>
+            </Card>
           ))}
         </div>
       </Container>
 
-      <Container className="pb-16">
+      <Container className="pb-4">
         <div className="max-w-2xl border-l-2 border-accent/40 pl-6">
           <h2 className="font-display text-xl font-semibold text-chrome">
             Where the estimate can move

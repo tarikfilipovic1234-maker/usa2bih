@@ -5,7 +5,7 @@ import { Calculator } from "@/components/calculator/Calculator";
 export const metadata: Metadata = {
   title: "Import Cost Calculator",
   description:
-    "Estimate the full landed cost of importing a US car to Bosnia & Herzegovina — purchase, shipping, customs duty, VAT, and fees in BAM and EUR.",
+    "Work out the landed cost of importing a US car to Bosnia and Herzegovina: purchase price, shipping, customs duty, VAT and fees, totalled in BAM and EUR.",
 };
 
 function num(v: string | string[] | undefined) {

@@ -22,7 +22,7 @@ export default async function EditVehiclePage({ params }: { params: Promise<{ id
           <Link href="/admin/vehicles" className="inline-flex items-center gap-1.5 text-sm text-silver-dim hover:text-accent">
             <ChevronLeft className="h-4 w-4" /> Back to vehicles
           </Link>
-          <h1 className="mt-2 font-display text-3xl font-bold tracking-tight text-chrome-gradient">
+          <h1 className="mt-2 font-display text-3xl font-bold tracking-tight text-chrome">
             {vehicle.year} {vehicle.make} {vehicle.model}
           </h1>
         </div>

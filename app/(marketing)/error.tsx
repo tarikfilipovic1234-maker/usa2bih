@@ -21,7 +21,7 @@ export default function MarketingError({
       <div className="flex max-w-md flex-col items-center gap-5 text-center">
         <h1 className="font-display text-3xl font-bold text-chrome">Something went wrong</h1>
         <p className="text-silver-dim">
-          We hit a snag loading this page. Please try again — if it keeps happening, contact us.
+          This page could not be loaded. Try again, and contact us if it keeps happening.
         </p>
         <Button onClick={reset}>
           <RotateCcw className="h-4 w-4" /> Try again

@@ -20,7 +20,7 @@ export function ProfileForm({
       <div>
         <Label htmlFor="email">Email</Label>
         <Input id="email" value={email} disabled className="opacity-60" />
-        <p className="mt-1 text-xs text-silver-dim/70">Managed by your account — change it in account settings.</p>
+        <p className="mt-1 text-xs text-silver-dim/70">Managed by your account. Change it in account settings.</p>
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <div>

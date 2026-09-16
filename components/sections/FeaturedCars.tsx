@@ -1,5 +1,4 @@
-import { ArrowRight } from "lucide-react";
-import { Container, SectionHeading } from "@/components/ui/Container";
+import { Container, SectionHeader } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
 import { getFeaturedVehicles } from "@/lib/queries";
@@ -10,26 +9,22 @@ export async function FeaturedCars() {
   if (vehicles.length === 0) return null;
 
   return (
-    <section className="py-20">
-      <Container>
-        <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-          <SectionHeading
-            align="left"
-            eyebrow="Featured imports"
-            title="Hand-picked vehicles"
-            description="A curated selection of standout cars ready to import right now."
-          />
-          <ButtonLink href="/cars" variant="outline" className="shrink-0">
-            View all <ArrowRight className="h-4 w-4" />
+    <Container className="py-12">
+      <SectionHeader
+        title="Featured vehicles"
+        description="Vehicles currently marked as available to import. Each price shown is the auction price, with the estimated landed cost beside it."
+        action={
+          <ButtonLink href="/cars" variant="outline">
+            View all vehicles
           </ButtonLink>
-        </div>
+        }
+      />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {vehicles.map((v, i) => (
-            <VehicleCard key={v.id} vehicle={v} favorited={favorited.has(v.id)} priority={i < 2} />
-          ))}
-        </div>
-      </Container>
-    </section>
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {vehicles.map((v, i) => (
+          <VehicleCard key={v.id} vehicle={v} favorited={favorited.has(v.id)} eager={i < 2} />
+        ))}
+      </div>
+    </Container>
   );
 }

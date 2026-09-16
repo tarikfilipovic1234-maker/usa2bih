@@ -6,48 +6,56 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/** Format a number as USD. */
-export function formatUSD(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(value);
-}
-
-/** Format a number as a currency in the given ISO code (default BAM/EUR helpers below). */
-export function formatCurrency(value: number, currency: string, locale = "de-DE") {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency,
-    maximumFractionDigits: 0,
-  }).format(value);
-}
-
-export const formatBAM = (value: number) =>
-  `${new Intl.NumberFormat("bs-BA", { maximumFractionDigits: 0 }).format(value)} KM`;
-
-export const formatEUR = (value: number) => formatCurrency(value, "EUR");
-
-/** Compact number formatting (e.g. 12.4k). */
-export function formatCompact(value: number) {
-  return new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(
-    value,
+/**
+ * Number and date formatting is done explicitly rather than through
+ * Intl.NumberFormat locale data. Node and browser builds ship different ICU
+ * versions, and the separators they pick for locales such as bs-BA disagree,
+ * which produced a hydration mismatch between the server and client renders.
+ */
+function group(value: number, separator: string) {
+  const rounded = Math.round(value);
+  const sign = rounded < 0 ? "-" : "";
+  return (
+    sign + String(Math.abs(rounded)).replace(/\B(?=(\d{3})+(?!\d))/g, separator)
   );
 }
 
-/** Format mileage in miles. */
-export function formatMiles(value: number) {
-  return `${new Intl.NumberFormat("en-US").format(value)} mi`;
+/** Format a number as USD, e.g. $18,000. */
+export function formatUSD(value: number) {
+  const rounded = Math.round(value);
+  return `${rounded < 0 ? "-" : ""}$${group(Math.abs(rounded), ",")}`;
 }
 
-/** Human-readable date. */
+/** Convertible marks, written the way they are in BiH: 49.514 KM. */
+export const formatBAM = (value: number) => `${group(value, ".")} KM`;
+
+/** Euros, written with the same grouping convention: 25.312 EUR. */
+export const formatEUR = (value: number) => `${group(value, ".")} EUR`;
+
+/** Format mileage in miles. */
+export function formatMiles(value: number) {
+  return `${group(value, ",")} mi`;
+}
+
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+/** Human-readable date, e.g. 16 Sep 2026. */
 export function formatDate(date: Date | string) {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  }).format(new Date(date));
+  const d = new Date(date);
+  return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
 }
 
 /** Build a query string from a record, dropping empty values. */

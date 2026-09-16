@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { ImportStageTracker } from "@/components/dashboard/ImportStageTracker";
@@ -25,7 +25,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col gap-8">
       <header>
-        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome-gradient">
+        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome">
           Welcome back{profile.name ? `, ${profile.name.split(" ")[0]}` : ""}
         </h1>
         <p className="mt-1 text-silver-dim">Here&apos;s an overview of your imports and activity.</p>
@@ -39,7 +39,7 @@ export default async function DashboardPage() {
       </div>
 
       {activeImport ? (
-        <GlassCard chrome className="flex flex-col gap-6 p-6">
+        <Card className="flex flex-col gap-6 p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs uppercase tracking-wider text-silver-dim">Current import</p>
@@ -55,16 +55,16 @@ export default async function DashboardPage() {
             </ButtonLink>
           </div>
           <ImportStageTracker currentStage={activeImport.currentStage} />
-        </GlassCard>
+        </Card>
       ) : (
-        <GlassCard className="flex flex-col items-center gap-4 px-6 py-14 text-center">
+        <Card className="flex flex-col items-center gap-4 px-6 py-14 text-center">
           <h2 className="font-display text-lg font-semibold text-chrome">No active imports yet</h2>
           <p className="max-w-md text-sm text-silver-dim">
             Browse our listings and send an inquiry to get your first import started. We&apos;ll set
             up live tracking here.
           </p>
           <ButtonLink href="/cars">Browse cars</ButtonLink>
-        </GlassCard>
+        </Card>
       )}
 
       {recentlyViewed.length > 0 && (

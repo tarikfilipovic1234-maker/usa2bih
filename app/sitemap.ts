@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/db";
 import { SITE } from "@/lib/constants";
 
+const LEGAL = ["/privacy", "/terms"];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = SITE.url.replace(/\/$/, "");
 
@@ -14,11 +16,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/contact",
     "/faq",
     "/compare",
+    "/privacy",
+    "/terms",
   ].map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(),
-    changeFrequency: path === "/cars" ? "hourly" : "weekly",
-    priority: path === "" ? 1 : 0.7,
+    changeFrequency: LEGAL.includes(path) ? "yearly" : path === "/cars" ? "hourly" : "weekly",
+    priority: path === "" ? 1 : LEGAL.includes(path) ? 0.3 : 0.7,
   }));
 
   let vehicleRoutes: MetadataRoute.Sitemap = [];
@@ -36,7 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     }));
   } catch {
-    // DB unavailable at build — ship the static routes only.
+    // DB unavailable at build: ship the static routes only.
   }
 
   return [...staticRoutes, ...vehicleRoutes];

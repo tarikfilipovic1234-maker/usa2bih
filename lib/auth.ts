@@ -57,14 +57,14 @@ export async function getSession(): Promise<SessionData | null> {
   return { user, profile };
 }
 
-/** Require auth — redirects to sign-in when signed out. */
+/** Require auth: redirects to sign-in when signed out. */
 export async function requireUser(): Promise<SessionData> {
   const session = await getSession();
   if (!session) redirect("/auth/sign-in");
   return session;
 }
 
-/** Require ADMIN — redirects signed-out → sign-in, non-admins → dashboard. */
+/** Require ADMIN: signed-out users go to sign-in, non-admins to the dashboard. */
 export async function requireAdmin(): Promise<SessionData> {
   const session = await requireUser();
   if (session.profile.role !== "ADMIN") redirect("/dashboard");

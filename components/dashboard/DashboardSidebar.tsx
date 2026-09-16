@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Menu, Settings, X } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
 import { SignOutButton } from "@/components/auth/SignOutButton";
-import { resolveIcon } from "@/lib/icons";
+import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
 
 export type NavItem = { href: string; label: string; icon: string };
@@ -14,11 +14,9 @@ export type NavItem = { href: string; label: string; icon: string };
 export function DashboardSidebar({
   items,
   title,
-  displayName,
 }: {
   items: readonly NavItem[];
   title: string;
-  displayName: string | null;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -29,7 +27,6 @@ export function DashboardSidebar({
         const active =
           pathname === item.href ||
           (item.href !== "/dashboard" && item.href !== "/admin" && pathname.startsWith(item.href));
-        const Icon = resolveIcon(item.icon);
         return (
           <Link
             key={item.href}
@@ -42,7 +39,7 @@ export function DashboardSidebar({
                 : "text-silver-dim hover:bg-white/5 hover:text-chrome",
             )}
           >
-            <Icon className="h-4 w-4" />
+            <Icon name={item.icon} className="h-4 w-4" />
             {item.label}
           </Link>
         );

@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { PAGE_SIZE } from "@/lib/constants";
 
-/** Vehicle with its images + favorite count — the shape cards/detail use. */
+/** Vehicle with its images and favorite count: the shape cards/detail use. */
 const vehicleListInclude = {
   images: { orderBy: { sortOrder: "asc" } },
 } satisfies Prisma.VehicleInclude;

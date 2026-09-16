@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { Check, Save } from "lucide-react";
 import type { AdminFormState } from "@/app/actions/admin";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input, Label, Select, Textarea } from "@/components/ui/Field";
 import {
@@ -65,7 +65,7 @@ export function VehicleForm({
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
-      <GlassCard chrome className="grid gap-5 p-6 sm:grid-cols-2 lg:grid-cols-3">
+      <Card className="grid gap-5 p-6 sm:grid-cols-2 lg:grid-cols-3">
         <div>
           <Label htmlFor="make">Make *</Label>
           <Input id="make" name="make" defaultValue={v(defaults.make)} required />
@@ -122,9 +122,9 @@ export function VehicleForm({
           <Label htmlFor="interiorColor">Interior color</Label>
           <Input id="interiorColor" name="interiorColor" defaultValue={v(defaults.interiorColor)} />
         </div>
-      </GlassCard>
+      </Card>
 
-      <GlassCard className="grid gap-5 p-6 sm:grid-cols-2 lg:grid-cols-3">
+      <Card className="grid gap-5 p-6 sm:grid-cols-2 lg:grid-cols-3">
         <div>
           <Label htmlFor="auctionName">Auction</Label>
           <Input id="auctionName" name="auctionName" defaultValue={v(defaults.auctionName)} placeholder="Copart" />
@@ -153,9 +153,9 @@ export function VehicleForm({
           <Label htmlFor="description">Description</Label>
           <Textarea id="description" name="description" defaultValue={v(defaults.description)} />
         </div>
-      </GlassCard>
+      </Card>
 
-      <GlassCard className="flex flex-wrap items-end gap-6 p-6">
+      <Card className="flex flex-wrap items-end gap-6 p-6">
         <div className="w-40">
           <Label htmlFor="status">Status</Label>
           <Select id="status" name="status" defaultValue={defaults.status ?? "DRAFT"}>
@@ -182,7 +182,7 @@ export function VehicleForm({
             <Save className="h-4 w-4" /> {pending ? "Saving…" : submitLabel}
           </Button>
         </div>
-      </GlassCard>
+      </Card>
     </form>
   );
 }

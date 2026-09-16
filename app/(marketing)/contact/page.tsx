@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { Container, SectionHeading } from "@/components/ui/Container";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { ContactForm } from "@/components/ContactForm";
 import { SITE } from "@/lib/constants";
 
@@ -24,14 +24,14 @@ export default function ContactPage() {
       <SectionHeading
         as="h1"
         eyebrow="Contact"
-        title="Let's get your import started"
-        description="Questions about a specific vehicle or the process? Send us a message and our team will get back to you."
+        title="Get in touch"
+        description="Ask about a specific vehicle, or about how the import process would work for you. Include a lot number or VIN if you have one and we can quote against it."
       />
 
       <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.4fr]">
         <div className="flex flex-col gap-4">
           {INFO.map((item) => (
-            <GlassCard key={item.label} className="flex items-center gap-4 p-5">
+            <Card key={item.label} className="flex items-center gap-4 p-5">
               <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent/15 text-accent-bright">
                 <item.icon className="h-5 w-5" />
               </span>
@@ -39,13 +39,13 @@ export default function ContactPage() {
                 <p className="text-xs uppercase tracking-wider text-silver-dim">{item.label}</p>
                 <p className="font-medium text-chrome">{item.value}</p>
               </div>
-            </GlassCard>
+            </Card>
           ))}
         </div>
 
-        <GlassCard chrome className="p-6 sm:p-8">
+        <Card className="p-6 sm:p-8">
           <ContactForm />
-        </GlassCard>
+        </Card>
       </div>
     </Container>
   );

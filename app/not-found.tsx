@@ -1,32 +1,35 @@
 import Link from "next/link";
-import { Compass, Home } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Page not found",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (
     <main className="grid min-h-dvh place-items-center px-6">
-      <div className="flex max-w-md flex-col items-center gap-6 text-center">
-        <span className="grid h-16 w-16 place-items-center rounded-2xl bg-accent/15 text-accent-bright">
-          <Compass className="h-8 w-8" />
-        </span>
+      <div className="flex max-w-md flex-col items-start gap-6">
+        <p className="font-mono text-sm font-medium text-accent">404</p>
         <div>
-          <p className="font-display text-6xl font-extrabold text-chrome-gradient">404</p>
-          <h1 className="mt-2 font-display text-2xl font-bold text-chrome">Page not found</h1>
-          <p className="mt-2 text-silver-dim">
-            The page you&apos;re looking for has driven off. Let&apos;s get you back on the road.
+          <h1 className="font-display text-2xl font-semibold text-chrome">Page not found</h1>
+          <p className="mt-2 leading-relaxed text-silver-dim">
+            This address does not match anything on the site. A vehicle listing that has been sold
+            or archived will also land here.
           </p>
         </div>
-        <div className="flex gap-3">
-          <Link
-            href="/"
-            className="inline-flex h-11 items-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-midnight transition-colors hover:bg-accent-bright"
-          >
-            <Home className="h-4 w-4" /> Home
-          </Link>
+        <div className="flex flex-wrap gap-3">
           <Link
             href="/cars"
-            className="inline-flex h-11 items-center gap-2 rounded-full border border-steel-2 px-6 text-sm font-medium text-silver transition-all hover:border-accent hover:text-chrome"
+            className="inline-flex h-10 items-center rounded-md border border-accent-deep bg-accent-deep px-5 text-sm font-medium text-white transition-colors hover:border-accent hover:bg-accent"
           >
             Browse cars
+          </Link>
+          <Link
+            href="/"
+            className="inline-flex h-10 items-center rounded-md border border-steel-2 px-5 text-sm font-medium text-silver transition-colors hover:border-silver-dim hover:text-chrome"
+          >
+            Home
           </Link>
         </div>
       </div>

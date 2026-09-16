@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { VehicleRowActions } from "@/components/admin/VehicleRowActions";
@@ -22,7 +22,7 @@ export default async function AdminVehiclesPage({
     <div className="flex flex-col gap-6">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-bold tracking-tight text-chrome-gradient">Vehicles</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight text-chrome">Vehicles</h1>
           <p className="mt-1 text-silver-dim">{vehicles.length} total</p>
         </div>
         <div className="flex items-center gap-3">
@@ -31,7 +31,7 @@ export default async function AdminVehiclesPage({
               name="q"
               defaultValue={q}
               placeholder="Search make, model, VIN…"
-              className="h-10 w-64 rounded-full border border-steel bg-midnight-2 px-4 text-sm text-chrome placeholder:text-silver-dim/60 focus:border-accent focus:outline-none"
+              className="h-10 w-64 rounded-md border border-steel bg-midnight-2 px-4 text-sm text-chrome placeholder:text-silver-dim/60 focus:border-accent focus:outline-none"
             />
           </form>
           <ButtonLink href="/admin/vehicles/new">
@@ -40,7 +40,7 @@ export default async function AdminVehiclesPage({
         </div>
       </header>
 
-      <GlassCard className="overflow-hidden p-0">
+      <Card className="overflow-hidden p-0">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[760px] text-sm">
             <thead>
@@ -94,7 +94,7 @@ export default async function AdminVehiclesPage({
             </tbody>
           </table>
         </div>
-      </GlassCard>
+      </Card>
     </div>
   );
 }

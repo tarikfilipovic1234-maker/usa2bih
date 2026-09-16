@@ -41,7 +41,7 @@ export function Pagination({
               href={hrefFor(p)}
               aria-current={p === page ? "page" : undefined}
               className={cn(
-                "grid h-10 min-w-10 place-items-center rounded-full px-3 text-sm font-medium transition-colors",
+                "grid h-10 min-w-10 place-items-center rounded-md px-3 text-sm font-medium transition-colors",
                 p === page
                   ? "bg-accent text-midnight"
                   : "border border-steel-2 text-silver hover:border-accent hover:text-chrome",
@@ -73,7 +73,7 @@ function PageLink({
 }) {
   if (disabled) {
     return (
-      <span className="grid h-10 w-10 place-items-center rounded-full border border-steel/40 text-steel-2" {...props}>
+      <span className="grid h-10 w-10 place-items-center rounded-md border border-steel/40 text-steel-2" {...props}>
         {children}
       </span>
     );
@@ -81,7 +81,7 @@ function PageLink({
   return (
     <Link
       href={href}
-      className="grid h-10 w-10 place-items-center rounded-full border border-steel-2 text-silver transition-colors hover:border-accent hover:text-chrome"
+      className="grid h-10 w-10 place-items-center rounded-md border border-steel-2 text-silver transition-colors hover:border-accent hover:text-chrome"
       {...props}
     >
       {children}

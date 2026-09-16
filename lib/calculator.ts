@@ -33,7 +33,7 @@ export type ImportCostResult = {
 const round = (n: number) => Math.round(n);
 
 /**
- * Pure function — given purchase/shipping/fees, returns the full landed-cost
+ * Pure function. Given purchase/shipping/fees, returns the full landed-cost
  * breakdown in USD plus EUR & BAM totals. Used by the calculator page, the
  * vehicle-detail "estimated landed cost", and saved calculations.
  */

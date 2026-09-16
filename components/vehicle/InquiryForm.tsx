@@ -21,7 +21,7 @@ export function InquiryForm({
         <CheckCircle2 className="h-12 w-12 text-positive" />
         <h3 className="font-display text-lg font-semibold text-chrome">Inquiry sent</h3>
         <p className="text-sm text-silver-dim">
-          Thanks — our team will get back to you shortly about{" "}
+          Thanks. We will get back to you shortly about{" "}
           {vehicleName ? <span className="text-chrome">{vehicleName}</span> : "your request"}.
         </p>
       </div>

@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { Check, Save } from "lucide-react";
 import { updateGuideSection, type AdminFormState } from "@/app/actions/admin";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input, Label, Textarea } from "@/components/ui/Field";
 
@@ -24,7 +24,7 @@ export function GuideSectionEditor({
   );
 
   return (
-    <GlassCard className="p-5">
+    <Card className="p-5">
       <form action={action} className="flex flex-col gap-3">
         <div className="flex items-center gap-3">
           <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-accent/15 text-sm font-bold text-accent-bright">
@@ -55,6 +55,6 @@ export function GuideSectionEditor({
           </Button>
         </div>
       </form>
-    </GlassCard>
+    </Card>
   );
 }

@@ -1,5 +1,5 @@
 import { FileText } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { UploadDocumentForm } from "@/components/dashboard/UploadDocumentForm";
 import { DeleteDocumentButton } from "@/components/dashboard/DeleteDocumentButton";
 import { requireUser } from "@/lib/auth";
@@ -15,24 +15,24 @@ export default async function DocumentsPage() {
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome-gradient">Documents</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome">Documents</h1>
         <p className="mt-1 text-silver-dim">Store invoices, titles and import paperwork securely.</p>
       </header>
 
-      <GlassCard chrome className="p-6">
+      <Card className="p-6">
         <UploadDocumentForm />
-      </GlassCard>
+      </Card>
 
       {docs.length === 0 ? (
-        <GlassCard className="flex flex-col items-center gap-3 px-6 py-14 text-center">
+        <Card className="flex flex-col items-center gap-3 px-6 py-14 text-center">
           <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white/5 text-silver-dim">
             <FileText className="h-7 w-7" />
           </span>
           <h2 className="font-display text-lg font-semibold text-chrome">No documents yet</h2>
           <p className="text-sm text-silver-dim">Upload your first document above.</p>
-        </GlassCard>
+        </Card>
       ) : (
-        <GlassCard className="divide-y divide-white/5 p-0">
+        <Card className="divide-y divide-white/5 p-0">
           {docs.map((doc) => (
             <div key={doc.id} className="flex items-center gap-4 px-5 py-3.5">
               <FileText className="h-5 w-5 shrink-0 text-accent" />
@@ -48,7 +48,7 @@ export default async function DocumentsPage() {
               <DeleteDocumentButton id={doc.id} />
             </div>
           ))}
-        </GlassCard>
+        </Card>
       )}
     </div>
   );

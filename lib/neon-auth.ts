@@ -2,7 +2,7 @@ import "server-only";
 import { createNeonAuth } from "@neondatabase/auth/next/server";
 
 /**
- * Neon Auth (Better Auth) server instance — the single entry point for
+ * Neon Auth (Better Auth) server instance. The single entry point for
  * server-side auth: `auth.handler()` (API route), `auth.getSession()`,
  * `auth.signIn`, `auth.signUp`, `auth.signOut`.
  */

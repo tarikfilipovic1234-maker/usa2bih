@@ -41,7 +41,7 @@ export function FavoriteButton({
         disabled={pending}
         aria-pressed={favorited}
         className={cn(
-          "inline-flex h-11 items-center justify-center gap-2 rounded-full border px-6 text-sm font-medium transition-all",
+          "inline-flex h-11 items-center justify-center gap-2 rounded-md border px-6 text-sm font-medium transition-all",
           favorited
             ? "border-danger/40 bg-danger/10 text-danger"
             : "border-steel-2 text-silver hover:border-accent hover:text-chrome",

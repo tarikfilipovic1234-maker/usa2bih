@@ -1,66 +1,50 @@
-"use client";
-
-import { Calculator, Gavel, Ship, Truck } from "lucide-react";
-import { motion } from "framer-motion";
-import { Container, SectionHeading } from "@/components/ui/Container";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { RevealGroup, revealItem } from "@/components/motion/Reveal";
+import { Container, SectionHeader } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 
 const STEPS = [
   {
-    icon: Calculator,
-    title: "Estimate the cost",
-    body: "Use our transparent calculator to see the full landed price in BAM & EUR before you commit.",
+    title: "Price the import",
+    body: "Put an auction price through the calculator and see duty, VAT, freight and fees as separate lines before you bid on anything.",
   },
   {
-    icon: Gavel,
-    title: "We win the auction",
-    body: "Our team bids on your behalf at Copart, IAAI & Manheim to secure your vehicle.",
+    title: "We bid for you",
+    body: "Send an inquiry on a vehicle with the maximum you are willing to pay. We bid on your behalf and stop at your ceiling.",
   },
   {
-    icon: Ship,
-    title: "Ocean shipping",
-    body: "Your car is shipped and cleared through customs — every step tracked in your dashboard.",
+    title: "Freight and clearance",
+    body: "The car moves to the export port, crosses by sea, and clears customs in Bosnia. Each stage appears in your dashboard as it completes.",
   },
   {
-    icon: Truck,
-    title: "Delivered in BiH",
-    body: "We register and deliver the road-ready vehicle straight to your city.",
+    title: "Registration and handover",
+    body: "Technical inspection and registration are completed, and the car is handed over with its full document set.",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <Container className="py-20">
-      <SectionHeading
-        eyebrow="How it works"
-        title="From US auction to your driveway"
-        description="A fully managed, transparent import process — no surprises, no hidden fees."
+    <Container className="py-12">
+      <SectionHeader
+        title="How an import runs"
+        description="Four stages, each one visible to you while it is happening."
+        action={
+          <ButtonLink href="/guide" variant="outline">
+            Read the full guide
+          </ButtonLink>
+        }
       />
 
-      <RevealGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <ol className="mt-8 grid gap-px bg-steel sm:grid-cols-2 lg:grid-cols-4">
         {STEPS.map((step, i) => (
-          <motion.div key={step.title} variants={revealItem}>
-            <GlassCard interactive className="relative h-full p-6">
-              <span className="absolute right-5 top-4 font-display text-5xl font-extrabold text-white/5">
-                {i + 1}
-              </span>
-              <span className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-accent/15 text-accent-bright">
-                <step.icon className="h-6 w-6" />
-              </span>
-              <h3 className="font-display text-lg font-semibold text-chrome">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-silver-dim">{step.body}</p>
-            </GlassCard>
-          </motion.div>
+          <li key={step.title} className="bg-midnight p-6 pt-8">
+            <span className="font-mono text-xs font-medium tabular-nums text-accent">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <h3 className="mt-3 font-display text-base font-semibold text-chrome">{step.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-silver-dim">{step.body}</p>
+          </li>
         ))}
-      </RevealGroup>
+      </ol>
 
-      <div className="mt-10 flex justify-center">
-        <ButtonLink href="/guide" variant="secondary">
-          See the full import guide
-        </ButtonLink>
-      </div>
     </Container>
   );
 }

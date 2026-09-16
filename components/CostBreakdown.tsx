@@ -1,4 +1,4 @@
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { formatBAM, formatEUR, formatUSD } from "@/lib/utils";
 import type { ImportCostResult } from "@/lib/calculator";
 
@@ -10,7 +10,7 @@ export function CostBreakdown({
   title?: string;
 }) {
   return (
-    <GlassCard chrome className="overflow-hidden p-0">
+    <Card className="overflow-hidden p-0">
       <div className="border-b border-white/5 px-6 py-4">
         <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-chrome">
           {title}
@@ -32,7 +32,7 @@ export function CostBreakdown({
         <div className="flex items-end justify-between">
           <div>
             <p className="text-xs uppercase tracking-wider text-silver-dim">Total in BAM</p>
-            <p className="font-display text-3xl font-bold text-accent-gradient">
+            <p className="font-display text-3xl font-bold text-accent-bright">
               {formatBAM(result.totalBAM)}
             </p>
           </div>
@@ -42,6 +42,6 @@ export function CostBreakdown({
           </div>
         </div>
       </div>
-    </GlassCard>
+    </Card>
   );
 }

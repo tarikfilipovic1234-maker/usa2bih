@@ -2,9 +2,9 @@
 
 export const SITE = {
   name: "USA2BIH",
-  tagline: "American cars, delivered to Bosnia.",
+  tagline: "US car imports to Bosnia and Herzegovina",
   description:
-    "Browse US auction vehicles, estimate the full landed cost in BAM & EUR, and manage every step of importing your car to Bosnia and Herzegovina.",
+    "Browse US auction vehicles, work out the full landed cost in BAM before you bid, and follow the import through customs and registration in Bosnia and Herzegovina.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "en",
   email: "info@usa2bih.com",

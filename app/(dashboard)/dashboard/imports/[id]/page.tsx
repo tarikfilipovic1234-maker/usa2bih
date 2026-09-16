@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, FileText } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { ImportStageTracker } from "@/components/dashboard/ImportStageTracker";
 import { requireUser } from "@/lib/auth";
@@ -28,7 +28,7 @@ export default async function ImportDetailPage({ params }: { params: Promise<{ i
         <ChevronLeft className="h-4 w-4" /> Back to imports
       </Link>
 
-      <GlassCard chrome className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center">
+      <Card className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center">
         <div className="relative h-28 w-full overflow-hidden rounded-xl bg-graphite sm:h-24 sm:w-40">
           {img && <Image src={img.url} alt="" fill sizes="160px" className="object-cover" />}
         </div>
@@ -39,16 +39,16 @@ export default async function ImportDetailPage({ params }: { params: Promise<{ i
             {humanizeEnum(imp.currentStage)}
           </Badge>
         </div>
-      </GlassCard>
+      </Card>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_1.3fr]">
-        <GlassCard className="p-6">
+        <Card className="p-6">
           <h2 className="mb-5 font-display text-lg font-semibold text-chrome">Progress</h2>
           <ImportStageTracker currentStage={imp.currentStage} orientation="vertical" />
-        </GlassCard>
+        </Card>
 
         <div className="flex flex-col gap-6">
-          <GlassCard className="p-6">
+          <Card className="p-6">
             <h2 className="mb-4 font-display text-lg font-semibold text-chrome">Timeline</h2>
             {imp.events.length === 0 ? (
               <p className="text-sm text-silver-dim">No updates logged yet.</p>
@@ -66,9 +66,9 @@ export default async function ImportDetailPage({ params }: { params: Promise<{ i
                 ))}
               </ul>
             )}
-          </GlassCard>
+          </Card>
 
-          <GlassCard className="p-6">
+          <Card className="p-6">
             <h2 className="mb-4 font-display text-lg font-semibold text-chrome">Documents</h2>
             {imp.documents.length === 0 ? (
               <p className="text-sm text-silver-dim">No documents attached to this import yet.</p>
@@ -88,13 +88,13 @@ export default async function ImportDetailPage({ params }: { params: Promise<{ i
                 ))}
               </ul>
             )}
-          </GlassCard>
+          </Card>
 
           {imp.notes && (
-            <GlassCard className="p-6">
+            <Card className="p-6">
               <h2 className="mb-2 font-display text-lg font-semibold text-chrome">Notes</h2>
               <p className="text-sm leading-relaxed text-silver-dim">{imp.notes}</p>
-            </GlassCard>
+            </Card>
           )}
         </div>
       </div>

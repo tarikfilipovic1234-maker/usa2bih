@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { getAdminAnalytics, getAdminStats } from "@/lib/admin";
 import { formatUSD, formatDate } from "@/lib/utils";
@@ -10,7 +10,7 @@ export default async function AdminDashboard() {
   return (
     <div className="flex flex-col gap-8">
       <header>
-        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome-gradient">Admin Dashboard</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome">Admin Dashboard</h1>
         <p className="mt-1 text-silver-dim">Platform overview and recent activity.</p>
       </header>
 
@@ -22,7 +22,7 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <GlassCard className="p-6">
+        <Card className="p-6">
           <h2 className="mb-4 font-display text-lg font-semibold text-chrome">Most viewed</h2>
           {analytics.topViewed.length === 0 ? (
             <p className="text-sm text-silver-dim">No data yet.</p>
@@ -38,9 +38,9 @@ export default async function AdminDashboard() {
               ))}
             </ul>
           )}
-        </GlassCard>
+        </Card>
 
-        <GlassCard className="p-6">
+        <Card className="p-6">
           <h2 className="mb-4 font-display text-lg font-semibold text-chrome">Recent inquiries</h2>
           {analytics.recentInquiries.length === 0 ? (
             <p className="text-sm text-silver-dim">No inquiries yet.</p>
@@ -59,7 +59,7 @@ export default async function AdminDashboard() {
               ))}
             </ul>
           )}
-        </GlassCard>
+        </Card>
       </div>
     </div>
   );

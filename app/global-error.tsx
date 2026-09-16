@@ -21,14 +21,14 @@ export default function GlobalError({
           minHeight: "100vh",
           display: "grid",
           placeItems: "center",
-          background: "#06080c",
-          color: "#eef3fa",
+          background: "#0a0c10",
+          color: "#eef1f6",
           fontFamily: "system-ui, sans-serif",
         }}
       >
         <div style={{ textAlign: "center", padding: 24, maxWidth: 420 }}>
           <h1 style={{ fontSize: 28, fontWeight: 800, margin: "0 0 8px" }}>Something went wrong</h1>
-          <p style={{ color: "#8a94a6", margin: "0 0 24px" }}>
+          <p style={{ color: "#868f9e", margin: "0 0 24px" }}>
             An unexpected error occurred. Please try again.
           </p>
           <button
@@ -36,10 +36,10 @@ export default function GlobalError({
             style={{
               height: 44,
               padding: "0 24px",
-              borderRadius: 999,
+              borderRadius: 4,
               border: "none",
-              background: "#2e9bff",
-              color: "#06080c",
+              background: "#1668b8",
+              color: "#ffffff",
               fontWeight: 600,
               cursor: "pointer",
             }}

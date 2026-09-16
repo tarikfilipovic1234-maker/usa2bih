@@ -12,21 +12,21 @@ type SendArgs = { to?: string; subject: string; html: string; replyTo?: string }
 /** Sends an email via Resend; no-ops with a warning when no API key is set. */
 async function send({ to = TO, subject, html, replyTo }: SendArgs) {
   if (!resend) {
-    console.warn(`[email] RESEND_API_KEY not set — skipped: "${subject}"`);
+    console.warn(`[email] RESEND_API_KEY not set, skipped: "${subject}"`);
     return;
   }
   await resend.emails.send({ from: FROM, to, subject, html, replyTo });
 }
 
 const wrap = (title: string, rows: [string, string][], body?: string) => `
-  <div style="font-family:system-ui,sans-serif;background:#06080c;color:#e8eef7;padding:24px;border-radius:12px">
+  <div style="font-family:system-ui,sans-serif;background:#0a0c10;color:#e8eef7;padding:24px;border-radius:6px">
     <h2 style="margin:0 0 16px;color:#5cb6ff">${title}</h2>
     ${body ? `<p style="color:#c9d3e0">${body}</p>` : ""}
     <table style="width:100%;border-collapse:collapse;margin-top:12px">
       ${rows
         .map(
           ([k, v]) =>
-            `<tr><td style="padding:6px 8px;color:#8a94a6;width:130px">${k}</td><td style="padding:6px 8px">${v}</td></tr>`,
+            `<tr><td style="padding:6px 8px;color:#868f9e;width:130px">${k}</td><td style="padding:6px 8px">${v}</td></tr>`,
         )
         .join("")}
     </table>
@@ -51,7 +51,7 @@ export async function sendInquiryEmail(inquiry: {
         ["Vehicle", vehicleLine],
         ["Name", inquiry.name],
         ["Email", inquiry.email],
-        ["Phone", inquiry.phone ?? "—"],
+        ["Phone", inquiry.phone ?? "Not listed"],
         ["Message", inquiry.message],
       ],
     ),

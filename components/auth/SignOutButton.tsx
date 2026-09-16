@@ -15,7 +15,7 @@ export function SignOutButton({ className }: { className?: string }) {
     try {
       await authClient.signOut();
     } catch {
-      /* ignore — clear client state regardless */
+      /* ignore: clear client state regardless */
     }
     router.push("/");
     router.refresh();

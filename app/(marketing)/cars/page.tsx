@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { CarFront } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
 import { FilterSidebar } from "@/components/vehicle/FilterSidebar";
 import { SortSelect } from "@/components/vehicle/SortSelect";
@@ -13,7 +13,7 @@ import { getFavoritedIds } from "@/app/actions/favorites";
 export const metadata: Metadata = {
   title: "Browse US Auction Cars",
   description:
-    "Filter thousands of US auction vehicles by make, model, year, price, fuel, transmission and more — with transparent landed-cost estimates for Bosnia.",
+    "Filter the US auction vehicles currently available to import by make, model, year, price, fuel and transmission, each with a landed-cost estimate for Bosnia.",
 };
 
 type RawParams = Record<string, string | string[] | undefined>;
@@ -68,7 +68,7 @@ export default async function CarsPage({
   return (
     <Container className="py-12">
       <header className="mb-8">
-        <h1 className="font-display text-4xl font-bold tracking-tight text-chrome-gradient">
+        <h1 className="font-display text-4xl font-bold tracking-tight text-chrome">
           Browse Cars
         </h1>
         <p className="mt-2 text-silver-dim">
@@ -77,7 +77,7 @@ export default async function CarsPage({
       </header>
 
       <div className="grid gap-8 lg:grid-cols-[300px_1fr]">
-        <Suspense fallback={<div className="glass h-96 rounded-2xl" />}>
+        <Suspense fallback={<div className="panel h-96 rounded-2xl" />}>
           <FilterSidebar makes={makes} />
         </Suspense>
 
@@ -92,7 +92,7 @@ export default async function CarsPage({
           </div>
 
           {vehicles.length === 0 ? (
-            <GlassCard className="flex flex-col items-center gap-4 px-6 py-20 text-center">
+            <Card className="flex flex-col items-center gap-4 px-6 py-20 text-center">
               <span className="grid h-16 w-16 place-items-center rounded-2xl bg-white/5 text-silver-dim">
                 <CarFront className="h-8 w-8" />
               </span>
@@ -102,7 +102,7 @@ export default async function CarsPage({
                   Try widening your filters or resetting the search.
                 </p>
               </div>
-            </GlassCard>
+            </Card>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
               {vehicles.map((v, i) => (
@@ -110,7 +110,7 @@ export default async function CarsPage({
                   key={v.id}
                   vehicle={v}
                   favorited={favorited.has(v.id)}
-                  priority={i < 3}
+                  eager={i < 3}
                 />
               ))}
             </div>

@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { BadgeCheck, Bookmark, RotateCcw } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { Input, Label } from "@/components/ui/Field";
 import { Button } from "@/components/ui/Button";
 import { CostBreakdown } from "@/components/CostBreakdown";
@@ -23,7 +23,7 @@ const DEFAULTS: CalculatorInput = {
 const FIELDS: { key: keyof CalculatorInput; label: string; hint?: string }[] = [
   { key: "purchasePrice", label: "Vehicle purchase price ($)" },
   { key: "auctionFees", label: "Auction & broker fees ($)" },
-  { key: "shipping", label: "Shipping — ocean + inland ($)" },
+  { key: "shipping", label: "Shipping, ocean and inland ($)" },
   { key: "registration", label: "Registration & inspection ($)" },
   { key: "serviceFee", label: "USA2BIH service fee ($)" },
 ];
@@ -64,7 +64,7 @@ export function Calculator({
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-      <GlassCard chrome className="flex flex-col gap-5 p-6">
+      <Card className="flex flex-col gap-5 p-6">
         <div className="flex items-center justify-between">
           <h2 className="font-display text-lg font-semibold text-chrome">Your inputs</h2>
           <button
@@ -95,9 +95,9 @@ export function Calculator({
 
         <p className="rounded-xl border border-white/5 bg-white/[0.02] p-3 text-xs leading-relaxed text-silver-dim">
           Estimates include BiH customs duty (5%) and VAT/PDV (17%). FX: 1 USD ≈ 0.92 EUR, 1 EUR =
-          1.95583 BAM. Figures are indicative — contact us for a binding quote.
+          1.95583 BAM. Figures are indicative. Contact us for a binding quote.
         </p>
-      </GlassCard>
+      </Card>
 
       <div className="flex flex-col gap-4">
         <CostBreakdown result={result} title="Estimated total in Bosnia" />

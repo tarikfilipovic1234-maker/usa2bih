@@ -6,7 +6,7 @@ import { CTA } from "@/components/sections/CTA";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Answers to common questions about importing cars from the US to Bosnia & Herzegovina — costs, customs, timelines, salvage titles and more.",
+    "Answers to common questions about importing cars from the US to Bosnia and Herzegovina: costs, customs, timelines and salvage titles.",
 };
 
 const FAQS: Faq[] = [
@@ -28,7 +28,7 @@ const FAQS: Faq[] = [
   },
   {
     q: "What documents will I receive?",
-    a: "You'll receive the US title, export documents, bill of lading, and after clearance the BiH customs and registration paperwork — all stored in your dashboard.",
+    a: "You'll receive the US title, export documents, bill of lading, and after clearance the BiH customs and registration paperwork. All of it is stored in your dashboard.",
   },
   {
     q: "Can I track my import?",
@@ -48,7 +48,7 @@ export default function FaqPage() {
           as="h1"
           eyebrow="FAQ"
           title="Frequently asked questions"
-          description="Everything you need to know about importing your next car. Can't find an answer? Get in touch."
+          description="The questions we are asked most often about cost, timing, salvage titles and paperwork. Anything not covered here, send us a message."
         />
         <div className="mt-12">
           <FaqAccordion items={FAQS} />

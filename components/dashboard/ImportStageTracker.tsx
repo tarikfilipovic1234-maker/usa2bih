@@ -25,7 +25,7 @@ export function ImportStageTracker({
                 className={cn(
                   "relative z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full ring-4 ring-midnight transition-colors",
                   done && "bg-positive text-midnight",
-                  active && "bg-accent text-midnight animate-pulse-glow",
+                  active && "bg-accent text-midnight",
                   !done && !active && "bg-graphite-2 text-silver-dim",
                 )}
               >
@@ -58,7 +58,7 @@ export function ImportStageTracker({
                 className={cn(
                   "grid h-9 w-9 place-items-center rounded-full transition-colors",
                   done && "bg-positive text-midnight",
-                  active && "bg-accent text-midnight animate-pulse-glow",
+                  active && "bg-accent text-midnight",
                   !done && !active && "bg-graphite-2 text-silver-dim",
                 )}
               >

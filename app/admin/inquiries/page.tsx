@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { InquiryStatusSelect } from "@/components/admin/InquiryStatusSelect";
 import { getAdminInquiries } from "@/lib/admin";
 import { formatDate } from "@/lib/utils";
@@ -10,16 +10,16 @@ export default async function AdminInquiriesPage() {
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome-gradient">Inquiries</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome">Inquiries</h1>
         <p className="mt-1 text-silver-dim">{inquiries.length} total</p>
       </header>
 
       {inquiries.length === 0 ? (
-        <GlassCard className="px-6 py-12 text-center text-silver-dim">No inquiries yet.</GlassCard>
+        <Card className="px-6 py-12 text-center text-silver-dim">No inquiries yet.</Card>
       ) : (
         <div className="flex flex-col gap-3">
           {inquiries.map((inq) => (
-            <GlassCard key={inq.id} className="flex flex-col gap-3 p-5">
+            <Card key={inq.id} className="flex flex-col gap-3 p-5">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="font-medium text-chrome">
@@ -43,7 +43,7 @@ export default async function AdminInquiriesPage() {
                 <InquiryStatusSelect id={inq.id} status={inq.status} />
               </div>
               <p className="rounded-xl bg-white/[0.02] p-3 text-sm text-silver">{inq.message}</p>
-            </GlassCard>
+            </Card>
           ))}
         </div>
       )}

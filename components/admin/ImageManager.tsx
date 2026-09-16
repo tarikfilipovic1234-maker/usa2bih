@@ -9,7 +9,7 @@ import {
   uploadVehicleImages,
   type AdminFormState,
 } from "@/app/actions/admin";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
@@ -28,7 +28,7 @@ export function ImageManager({ vehicleId, images }: { vehicleId: string; images:
   );
 
   return (
-    <GlassCard chrome className="flex flex-col gap-5 p-6">
+    <Card className="flex flex-col gap-5 p-6">
       <div>
         <h2 className="font-display text-lg font-semibold text-chrome">Images</h2>
         <p className="text-sm text-silver-dim">Upload one or more photos. The first becomes the primary.</p>
@@ -59,7 +59,7 @@ export function ImageManager({ vehicleId, images }: { vehicleId: string; images:
             <div key={img.id} className="group relative aspect-square overflow-hidden rounded-xl">
               <Image src={img.url} alt="" fill sizes="200px" className="object-cover" />
               {img.isPrimary && (
-                <span className="absolute left-2 top-2 rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold text-midnight">
+                <span className="absolute left-2 top-2 rounded-md bg-accent px-2 py-0.5 text-[10px] font-semibold text-midnight">
                   Primary
                 </span>
               )}
@@ -90,6 +90,6 @@ export function ImageManager({ vehicleId, images }: { vehicleId: string; images:
           ))}
         </div>
       )}
-    </GlassCard>
+    </Card>
   );
 }

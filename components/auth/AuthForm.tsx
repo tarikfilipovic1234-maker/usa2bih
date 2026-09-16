@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { Input, Label } from "@/components/ui/Field";
 import { Logo } from "@/components/layout/Logo";
 
@@ -51,7 +51,7 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
         <Logo />
       </div>
 
-      <GlassCard chrome className="p-7 sm:p-8">
+      <Card className="p-7 sm:p-8">
         <div className="mb-6 text-center">
           <h1 className="font-display text-2xl font-bold text-chrome">
             {isSignUp ? "Create your account" : "Welcome back"}
@@ -97,7 +97,7 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
           <button
             type="submit"
             disabled={pending}
-            className="mt-1 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-accent text-sm font-medium text-midnight transition-colors hover:bg-accent-bright disabled:opacity-60"
+            className="mt-1 inline-flex h-11 items-center justify-center gap-2 rounded-md bg-accent text-sm font-medium text-midnight transition-colors hover:bg-accent-bright disabled:opacity-60"
           >
             {pending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -118,7 +118,7 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
             {isSignUp ? "Sign in" : "Sign up"}
           </Link>
         </p>
-      </GlassCard>
+      </Card>
 
       <p className="mt-6 text-center text-sm text-silver-dim">
         <Link href="/" className="hover:text-accent">

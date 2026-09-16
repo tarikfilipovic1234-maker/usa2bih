@@ -14,7 +14,7 @@ export function ContactForm() {
       <div className="flex flex-col items-center gap-3 py-12 text-center">
         <CheckCircle2 className="h-12 w-12 text-positive" />
         <h3 className="font-display text-xl font-semibold text-chrome">Message sent</h3>
-        <p className="text-sm text-silver-dim">Thanks for reaching out — we&apos;ll reply soon.</p>
+        <p className="text-sm text-silver-dim">Thanks for reaching out. We&apos;ll reply as soon as we can.</p>
       </div>
     );
   }

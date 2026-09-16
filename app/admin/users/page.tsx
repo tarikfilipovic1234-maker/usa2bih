@@ -1,4 +1,4 @@
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { UserRoleSelect } from "@/components/admin/UserRoleSelect";
 import { getAdminUsers } from "@/lib/admin";
 import { formatDate } from "@/lib/utils";
@@ -9,11 +9,11 @@ export default async function AdminUsersPage() {
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome-gradient">Users</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome">Users</h1>
         <p className="mt-1 text-silver-dim">{users.length} registered</p>
       </header>
 
-      <GlassCard className="overflow-hidden p-0">
+      <Card className="overflow-hidden p-0">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[560px] text-sm">
             <thead>
@@ -27,7 +27,7 @@ export default async function AdminUsersPage() {
               {users.map((u) => (
                 <tr key={u.id} className="hover:bg-white/[0.02]">
                   <td className="px-5 py-3">
-                    <p className="font-medium text-chrome">{u.name ?? "—"}</p>
+                    <p className="font-medium text-chrome">{u.name ?? "Not listed"}</p>
                     <p className="text-xs text-silver-dim">{u.email ?? u.userId}</p>
                   </td>
                   <td className="px-3 py-3 text-silver-dim">{formatDate(u.createdAt)}</td>
@@ -48,7 +48,7 @@ export default async function AdminUsersPage() {
             </tbody>
           </table>
         </div>
-      </GlassCard>
+      </Card>
     </div>
   );
 }

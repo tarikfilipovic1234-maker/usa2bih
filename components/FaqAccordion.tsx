@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { cn } from "@/lib/utils";
 
 export type Faq = { q: string; a: string };
@@ -16,35 +15,37 @@ export function FaqAccordion({ items }: { items: Faq[] }) {
       {items.map((item, i) => {
         const isOpen = open === i;
         return (
-          <GlassCard key={item.q} className="overflow-hidden p-0">
-            <button
-              type="button"
-              onClick={() => setOpen(isOpen ? null : i)}
-              aria-expanded={isOpen}
-              className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+          <Card key={item.q} className="overflow-hidden p-0">
+            <h2>
+              <button
+                type="button"
+                id={`faq-trigger-${i}`}
+                aria-expanded={isOpen}
+                aria-controls={`faq-panel-${i}`}
+                onClick={() => setOpen(isOpen ? null : i)}
+                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium text-chrome"
+              >
+                {item.q}
+                <Plus
+                  aria-hidden="true"
+                  className={cn(
+                    "h-5 w-5 shrink-0 text-silver-dim transition-transform duration-200",
+                    isOpen && "rotate-45 text-accent",
+                  )}
+                />
+              </button>
+            </h2>
+            <div
+              id={`faq-panel-${i}`}
+              role="region"
+              aria-labelledby={`faq-trigger-${i}`}
+              hidden={!isOpen}
             >
-              <span className="font-medium text-chrome">{item.q}</span>
-              <Plus
-                className={cn(
-                  "h-5 w-5 shrink-0 text-accent transition-transform duration-300",
-                  isOpen && "rotate-45",
-                )}
-              />
-            </button>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="overflow-hidden"
-                >
-                  <p className="px-5 pb-5 text-sm leading-relaxed text-silver-dim">{item.a}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </GlassCard>
+              <p className="border-t border-steel px-5 py-4 text-sm leading-relaxed text-silver-dim">
+                {item.a}
+              </p>
+            </div>
+          </Card>
         );
       })}
     </div>

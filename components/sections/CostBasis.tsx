@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Container } from "@/components/ui/Container";
+import { ButtonLink } from "@/components/ui/Button";
+import { Container, SectionHeader } from "@/components/ui/Container";
 import { RATES } from "@/lib/calculator";
 import { IMPORT_STAGES } from "@/lib/constants";
 
@@ -33,22 +33,18 @@ const FACTS = [
 
 export function CostBasis() {
   return (
-    <Container className="py-14">
-      <div className="flex flex-col gap-2 border-b border-steel pb-6">
-        <h2 className="font-display text-2xl font-semibold tracking-tight text-chrome">
-          What the estimate is based on
-        </h2>
-        <p className="max-w-2xl text-sm leading-relaxed text-silver-dim">
-          Import costs in Bosnia and Herzegovina are set by published rates, not by guesswork. These
-          are the figures every estimate on this site applies.{" "}
-          <Link href="/calculator" className="text-accent underline-offset-4 hover:underline">
+    <Container className="py-12">
+      <SectionHeader
+        title="What the estimate is based on"
+        description="Import costs in Bosnia and Herzegovina are set by published rates, not by guesswork. These are the figures every estimate on this site applies."
+        action={
+          <ButtonLink href="/calculator" variant="outline">
             Run your own numbers
-          </Link>
-          .
-        </p>
-      </div>
+          </ButtonLink>
+        }
+      />
 
-      <dl className="grid gap-x-8 gap-y-8 pt-8 sm:grid-cols-2 lg:grid-cols-4">
+      <dl className="mt-8 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
         {FACTS.map((fact) => (
           <div key={fact.label} className="flex flex-col gap-1">
             <dt className="font-display text-3xl font-semibold tabular-nums text-chrome">

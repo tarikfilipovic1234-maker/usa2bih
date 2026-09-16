@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Truck } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { ImportStageTracker } from "@/components/dashboard/ImportStageTracker";
@@ -18,12 +18,12 @@ export default async function ImportsPage() {
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome-gradient">My Imports</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome">My Imports</h1>
         <p className="mt-1 text-silver-dim">Track every vehicle through the import process.</p>
       </header>
 
       {imports.length === 0 ? (
-        <GlassCard className="flex flex-col items-center gap-4 px-6 py-16 text-center">
+        <Card className="flex flex-col items-center gap-4 px-6 py-16 text-center">
           <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white/5 text-silver-dim">
             <Truck className="h-7 w-7" />
           </span>
@@ -32,14 +32,14 @@ export default async function ImportsPage() {
             Once you start an import with us it will appear here with live stage tracking.
           </p>
           <ButtonLink href="/cars">Browse cars</ButtonLink>
-        </GlassCard>
+        </Card>
       ) : (
         <div className="flex flex-col gap-4">
           {imports.map((imp) => {
             const img = imp.vehicle?.images[0];
             const completed = imp.currentStage === "COMPLETED";
             return (
-              <GlassCard key={imp.id} className="flex flex-col gap-5 p-5">
+              <Card key={imp.id} className="flex flex-col gap-5 p-5">
                 <div className="flex items-center gap-4">
                   <div className="relative h-16 w-24 shrink-0 overflow-hidden rounded-lg bg-graphite">
                     {img && <Image src={img.url} alt="" fill sizes="96px" className="object-cover" />}
@@ -61,7 +61,7 @@ export default async function ImportsPage() {
                 <Link href={`/dashboard/imports/${imp.id}`} className="text-sm text-accent sm:hidden">
                   View details →
                 </Link>
-              </GlassCard>
+              </Card>
             );
           })}
         </div>

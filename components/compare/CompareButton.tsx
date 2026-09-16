@@ -17,7 +17,7 @@ export function CompareButton({ vehicleId, variant = "icon" }: { vehicleId: stri
         disabled={disabled}
         aria-pressed={active}
         className={cn(
-          "inline-flex h-11 items-center justify-center gap-2 rounded-full border px-6 text-sm font-medium transition-all disabled:opacity-40",
+          "inline-flex h-11 items-center justify-center gap-2 rounded-md border px-6 text-sm font-medium transition-all disabled:opacity-40",
           active
             ? "border-accent/40 bg-accent/10 text-accent-bright"
             : "border-steel-2 text-silver hover:border-accent hover:text-chrome",

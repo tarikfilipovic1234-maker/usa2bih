@@ -11,7 +11,7 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { VehicleGallery } from "@/components/vehicle/VehicleGallery";
 import { FavoriteButton } from "@/components/vehicle/FavoriteButton";
@@ -78,10 +78,10 @@ export default async function VehicleDetailPage({
     { label: "Transmission", value: humanizeEnum(vehicle.transmission), icon: <Settings2 className="h-4 w-4" /> },
     { label: "Drivetrain", value: humanizeEnum(vehicle.driveType) },
     { label: "Body style", value: humanizeEnum(vehicle.bodyStyle) },
-    { label: "Engine", value: vehicle.engine ?? "—" },
-    { label: "Cylinders", value: vehicle.cylinders ? String(vehicle.cylinders) : "—" },
-    { label: "Exterior", value: vehicle.exteriorColor ?? "—", icon: <Palette className="h-4 w-4" /> },
-    { label: "VIN", value: vehicle.vin ?? "—" },
+    { label: "Engine", value: vehicle.engine ?? "Not listed" },
+    { label: "Cylinders", value: vehicle.cylinders ? String(vehicle.cylinders) : "Not listed" },
+    { label: "Exterior", value: vehicle.exteriorColor ?? "Not listed", icon: <Palette className="h-4 w-4" /> },
+    { label: "VIN", value: vehicle.vin ?? "Not listed" },
     { label: "Condition", value: vehicle.condition ?? humanizeEnum(vehicle.damageStatus) },
   ];
 
@@ -103,7 +103,7 @@ export default async function VehicleDetailPage({
 
           <section>
             <h2 className="mb-4 font-display text-xl font-semibold text-chrome">Specifications</h2>
-            <GlassCard className="grid grid-cols-2 gap-px overflow-hidden p-0 sm:grid-cols-3">
+            <Card className="grid grid-cols-2 gap-px overflow-hidden p-0 sm:grid-cols-3">
               {specs.map((s) => (
                 <div key={s.label} className="bg-graphite/40 px-4 py-4">
                   <p className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-silver-dim">
@@ -114,7 +114,7 @@ export default async function VehicleDetailPage({
                   </p>
                 </div>
               ))}
-            </GlassCard>
+            </Card>
           </section>
 
           {vehicle.description && (
@@ -128,18 +128,18 @@ export default async function VehicleDetailPage({
             <h2 className="mb-4 font-display text-xl font-semibold text-chrome">
               Auction &amp; condition
             </h2>
-            <GlassCard className="flex flex-col gap-4 p-6">
+            <Card className="flex flex-col gap-4 p-6">
               <div className="grid gap-4 sm:grid-cols-2">
-                <Info label="Auction" value={vehicle.auctionName ?? "—"} />
-                <Info label="Lot number" value={vehicle.lotNumber ?? "—"} />
+                <Info label="Auction" value={vehicle.auctionName ?? "Not listed"} />
+                <Info label="Lot number" value={vehicle.lotNumber ?? "Not listed"} />
                 <Info
                   label="Location"
-                  value={vehicle.location ?? "—"}
+                  value={vehicle.location ?? "Not listed"}
                   icon={<MapPin className="h-4 w-4" />}
                 />
                 <Info
                   label="Auction date"
-                  value={vehicle.auctionDate ? formatDate(vehicle.auctionDate) : "—"}
+                  value={vehicle.auctionDate ? formatDate(vehicle.auctionDate) : "Not listed"}
                 />
               </div>
               {vehicle.damageNotes && (
@@ -151,13 +151,13 @@ export default async function VehicleDetailPage({
                   </div>
                 </div>
               )}
-            </GlassCard>
+            </Card>
           </section>
         </div>
 
         {/* Right: sticky purchase rail */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-20 lg:h-fit">
-          <GlassCard chrome className="flex flex-col gap-4 p-6">
+          <Card className="flex flex-col gap-4 p-6">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-medium uppercase tracking-wider text-accent">
@@ -195,22 +195,22 @@ export default async function VehicleDetailPage({
               </div>
               <Link
                 href={`/calculator?price=${vehicle.price}`}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-steel-2 text-sm font-medium text-silver transition-all hover:border-accent hover:text-chrome"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-steel-2 text-sm font-medium text-silver transition-all hover:border-accent hover:text-chrome"
               >
                 Open in calculator
               </Link>
             </div>
-          </GlassCard>
+          </Card>
 
           <CostBreakdown result={cost} />
 
-          <GlassCard chrome className="p-6">
+          <Card className="p-6">
             <h3 className="mb-1 font-display text-lg font-semibold text-chrome">Interested?</h3>
             <p className="mb-4 text-sm text-silver-dim">
               Send us a message and we&apos;ll walk you through importing this vehicle.
             </p>
             <InquiryForm vehicleId={vehicle.id} vehicleName={name} />
-          </GlassCard>
+          </Card>
         </div>
       </div>
 

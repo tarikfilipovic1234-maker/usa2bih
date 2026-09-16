@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
-import { RotateCcw, SlidersHorizontal } from "lucide-react";
+import { useCallback, useState } from "react";
+import { ChevronDown, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { Input, Label, Select } from "@/components/ui/Field";
 import {
   BODY_STYLES,
@@ -11,7 +11,7 @@ import {
   FUEL_TYPES,
   TRANSMISSIONS,
 } from "@/lib/constants";
-import { humanizeEnum } from "@/lib/utils";
+import { cn, humanizeEnum } from "@/lib/utils";
 
 function EnumSelect({
   name,
@@ -64,22 +64,52 @@ export function FilterSidebar({ makes }: { makes: string[] }) {
 
   const onField = (name: string, value: string) => update({ [name]: value });
 
+  // Collapsed on small screens so the vehicle grid is not pushed off-screen.
+  const [open, setOpen] = useState(false);
+
+  // Everything except paging and ordering counts as a filter the user set.
+  const activeCount = [...params.keys()].filter((k) => k !== "page" && k !== "sort").length;
+
   return (
-    <aside className="glass chrome-edge h-fit rounded-2xl p-5 lg:sticky lg:top-20">
-      <div className="mb-5 flex items-center justify-between">
-        <h2 className="flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-wider text-chrome">
-          <SlidersHorizontal className="h-4 w-4 text-accent" /> Filters
+    <aside className="panel h-fit rounded-lg p-5 lg:sticky lg:top-20">
+      <div className={cn("flex items-center justify-between lg:mb-5", open && "mb-5")}>
+        <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-chrome">
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="vehicle-filters"
+            className="flex items-center gap-2 lg:pointer-events-none"
+          >
+            <SlidersHorizontal aria-hidden="true" className="h-4 w-4 text-accent" />
+            Filters
+            {activeCount > 0 && (
+              <span className="rounded-sm bg-accent-deep px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-white">
+                {activeCount}
+              </span>
+            )}
+            <ChevronDown
+              aria-hidden="true"
+              className={cn(
+                "h-4 w-4 text-silver-dim transition-transform lg:hidden",
+                open && "rotate-180",
+              )}
+            />
+          </button>
         </h2>
         <button
           type="button"
           onClick={() => router.push("/cars")}
           className="inline-flex items-center gap-1 text-xs text-silver-dim transition-colors hover:text-accent"
         >
-          <RotateCcw className="h-3 w-3" /> Reset
+          <RotateCcw aria-hidden="true" className="h-3 w-3" /> Reset
         </button>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div
+        id="vehicle-filters"
+        className={cn("flex-col gap-4 lg:flex", open ? "flex" : "hidden")}
+      >
         <div>
           <Label htmlFor="q">Search</Label>
           <Input

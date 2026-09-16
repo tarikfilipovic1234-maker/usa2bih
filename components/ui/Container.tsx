@@ -40,13 +40,39 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "max-w-2xl text-balance leading-relaxed text-silver-dim",
+            "max-w-2xl text-pretty leading-relaxed text-silver-dim",
             align === "center" && "mx-auto",
           )}
         >
           {description}
         </p>
       )}
+    </div>
+  );
+}
+
+/**
+ * Section header used by the home-page sections. Keeps one heading size,
+ * one rule and one spacing rhythm across them.
+ */
+export function SectionHeader({
+  title,
+  description,
+  action,
+}: {
+  title: string;
+  description?: string;
+  action?: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-4 border-b border-steel pb-5 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <h2 className="font-display text-2xl font-semibold tracking-tight text-chrome">{title}</h2>
+        {description && (
+          <p className="mt-2 max-w-2xl leading-relaxed text-silver-dim">{description}</p>
+        )}
+      </div>
+      {action && <div className="shrink-0">{action}</div>}
     </div>
   );
 }

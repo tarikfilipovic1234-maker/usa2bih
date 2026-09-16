@@ -1,5 +1,5 @@
 import { Heart } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
 import { requireUser } from "@/lib/auth";
@@ -14,14 +14,14 @@ export default async function FavoritesPage() {
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome-gradient">
+        <h1 className="font-display text-3xl font-bold tracking-tight text-chrome">
           Saved Vehicles
         </h1>
         <p className="mt-1 text-silver-dim">{vehicles.length} saved</p>
       </header>
 
       {vehicles.length === 0 ? (
-        <GlassCard className="flex flex-col items-center gap-4 px-6 py-16 text-center">
+        <Card className="flex flex-col items-center gap-4 px-6 py-16 text-center">
           <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white/5 text-silver-dim">
             <Heart className="h-7 w-7" />
           </span>
@@ -30,7 +30,7 @@ export default async function FavoritesPage() {
             <p className="mt-1 text-sm text-silver-dim">Tap the heart on any listing to save it here.</p>
           </div>
           <ButtonLink href="/cars">Browse cars</ButtonLink>
-        </GlassCard>
+        </Card>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {vehicles.map((v) => (
